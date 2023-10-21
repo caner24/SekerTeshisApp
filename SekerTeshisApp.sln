@@ -3,7 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SekerTeshisApp.WebApi", "SekerTeshisApp.WebApi\SekerTeshisApp.WebApi.csproj", "{03327D5A-A01F-4CF0-B52E-63854BC90E15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeherTeshisApp.Application", "SeherTeshisApp.Application\SeherTeshisApp.Application.csproj", "{664EB937-0631-42C1-AD1A-E5605AA66E94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SekerTeshisApp.Data", "SekerTeshisApp.Data\SekerTeshisApp.Data.csproj", "{1D8A9135-C184-47C0-B41C-6DAB073DEB3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SekerTeshis.Entity", "SekerTeshis.Entity\SekerTeshis.Entity.csproj", "{7CC8950A-7223-4DFE-A4D3-FA80DE8F863F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SekerTeshis.Core", "SekerTeshis.Core\SekerTeshis.Core.csproj", "{858AD40C-1A92-44CB-B59D-41B5415AF742}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03327D5A-A01F-4CF0-B52E-63854BC90E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03327D5A-A01F-4CF0-B52E-63854BC90E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03327D5A-A01F-4CF0-B52E-63854BC90E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03327D5A-A01F-4CF0-B52E-63854BC90E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664EB937-0631-42C1-AD1A-E5605AA66E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664EB937-0631-42C1-AD1A-E5605AA66E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664EB937-0631-42C1-AD1A-E5605AA66E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664EB937-0631-42C1-AD1A-E5605AA66E94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D8A9135-C184-47C0-B41C-6DAB073DEB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D8A9135-C184-47C0-B41C-6DAB073DEB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D8A9135-C184-47C0-B41C-6DAB073DEB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D8A9135-C184-47C0-B41C-6DAB073DEB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CC8950A-7223-4DFE-A4D3-FA80DE8F863F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC8950A-7223-4DFE-A4D3-FA80DE8F863F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC8950A-7223-4DFE-A4D3-FA80DE8F863F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC8950A-7223-4DFE-A4D3-FA80DE8F863F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{858AD40C-1A92-44CB-B59D-41B5415AF742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858AD40C-1A92-44CB-B59D-41B5415AF742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858AD40C-1A92-44CB-B59D-41B5415AF742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858AD40C-1A92-44CB-B59D-41B5415AF742}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
