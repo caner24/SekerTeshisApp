@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace SekerTeshis.Entity
 {
-    public class Diabetes:IEntity
+    public class Diabetes : IEntity
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public bool IsDiabetUser { get; set; }
-        public enum DiabetesType
-        {
-            Tip1,
-            Tip2
-        }
         public User? User { get; set; }
         public List<DiabetesDetail>? DiabetesDetail { get; set; }
     }

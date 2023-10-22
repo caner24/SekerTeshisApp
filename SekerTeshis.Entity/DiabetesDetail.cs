@@ -27,7 +27,7 @@ namespace SekerTeshis.Entity
             Satiety
         }
         public DateTime MeasureDate { get; set; }
-        public int DiabetesId { get; set; }
+        public string? DiabetesId { get; set; }
         public Diabetes? Diabetes { get; set; }
         public Food Food { get; set; }
         public Exercises Exercises { get; set; }

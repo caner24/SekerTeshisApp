@@ -12,6 +12,6 @@ namespace SekerTeshis.Entity
         public int Id { get; set; }
         public string? ExercisesType { get; set; }
         public string? ExcersiesImgPath { get; set; }
-        public DiabetesDetail? DiabetDetail { get; set; }
+        public DiabetesDetail? DiabetesDetail { get; set; }
     }
 }

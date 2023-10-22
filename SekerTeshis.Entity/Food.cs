@@ -18,7 +18,7 @@ namespace SekerTeshis.Entity
             Evening
         }
         public string? FoodImgUrl { get; set; }
-        public nint Calories { get; set; }
+        public int Calories { get; set; }
         public DiabetesDetail? DiabetesDetail { get; set; }
     }
 }
