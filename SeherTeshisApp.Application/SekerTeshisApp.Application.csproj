@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Account\Handlers\" />
+    <Folder Include="ActionFilters\" />
+    <Folder Include="Admin\Handlers\" />
+    <Folder Include="Admin\Responses\" />
+    <Folder Include="Admin\Requests\" />
+    <Folder Include="App\Handlers\" />
+    <Folder Include="App\Responses\" />
+    <Folder Include="App\Requests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>
