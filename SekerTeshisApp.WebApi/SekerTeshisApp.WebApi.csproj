@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
@@ -27,9 +32,11 @@
 
   <ItemGroup>
     <Folder Include="Images\FoodImages\" />
+    <Folder Include="Images\ExerciseImages\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SeherTeshisApp.Application\SekerTeshisApp.Application.csproj" />
     <ProjectReference Include="..\SekerTeshisApp.Data\SekerTeshisApp.Data.csproj" />
   </ItemGroup>
 

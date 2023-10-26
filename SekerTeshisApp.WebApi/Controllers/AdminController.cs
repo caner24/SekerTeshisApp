@@ -5,7 +5,7 @@ namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
     [Authorize(Roles = "Admin")]
-    [Route("admin")]
+    [Route("api/[controller]")]
     public class AdminController : Controller
     {
 

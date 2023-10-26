@@ -1,13 +1,26 @@
+using Microsoft.AspNetCore.Identity;
+using SekerTeshis.Entity;
 using SekerTeshisApp.WebApi.Extentions;
+using AutoMapper;
+using System.Reflection;
+using FluentValidation.AspNetCore;
+using SekerTeshisApp.Application.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+
+builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureSqlServer(builder.Configuration);
-
+builder.Services.ConfigureIdentity();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("SekerTeshisApp.Application")));
+builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.ConfigureFluentValidation();
 var app = builder.Build();
+
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -20,6 +33,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

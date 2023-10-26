@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Data.Concrete.Configure
 {
-    internal class UserConfigure : IEntityTypeConfiguration<User>
+    public class UserConfigure : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {

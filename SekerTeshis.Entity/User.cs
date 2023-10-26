@@ -15,5 +15,8 @@ namespace SekerTeshis.Entity
             Diabetess = new Diabetes();
         }
         public Diabetes Diabetess { get; set; }
+
+        public String? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }
