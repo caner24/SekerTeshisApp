@@ -10,7 +10,6 @@ namespace SekerTeshisApp.WebApi.Validation.FluentValidation
         {
             RuleFor(x => x.Email).NotNull().WithMessage("Email alani bos gecilemez !.");
             RuleFor(x => x.Password).NotNull().WithMessage("Password alani bos gecilemez !.");
-            RuleFor(x => x.UserName).NotNull().WithMessage("UserName alani bos gecilemez !.");
         }
     }
 }

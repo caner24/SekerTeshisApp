@@ -29,5 +29,7 @@ namespace SekerTeshisApp.Data.Abstract
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
         Task<TokenDto> RefreshToken(TokenDto tokenDto);
 
+        Task<string> GenerateEmailConfirmationTokenAsync();
+
     }
 }

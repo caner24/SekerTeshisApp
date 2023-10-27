@@ -1,11 +1,14 @@
 ﻿using FluentValidation.AspNetCore;
+using MailKit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshisApp.Application;
+using SekerTeshisApp.Data.Abstract;
 using SekerTeshisApp.Data.Concrete;
 using System.Reflection;
 using System.Text;
@@ -45,7 +48,7 @@ namespace SekerTeshisApp.WebApi.Extentions
             services.AddFluentValidationAutoValidation();
         }
 
-        public static void ConfigureJWT(this IServiceCollection services,IConfiguration config)
+        public static void ConfigureJWT(this IServiceCollection services, IConfiguration config)
         {
             var jwtSettings = config.GetSection("JwtSettings");
             var secretKey = jwtSettings["secretKey"];
@@ -67,6 +70,22 @@ namespace SekerTeshisApp.WebApi.Extentions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
             });
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserDal, UserDal>();
+
+        }
+
+        public static void ConfigureMailServices(this IServiceCollection services, IConfiguration config)
+        {
+            var emailConfig = config
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+
+            services.AddSingleton(emailConfig);
+            services.AddSingleton<IMailService, MailService>();
         }
     }
 }

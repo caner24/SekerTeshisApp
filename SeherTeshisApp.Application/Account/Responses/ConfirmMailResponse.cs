@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.Account.Responses
 {
-    public class LoginUserResponse
+    public class ConfirmMailResponse
     {
-        public String AccessToken { get; init; }
-        public String RefreshToken { get; init; }
-        public bool IsLoggedIn { get; set; }
+        public bool IsAuth { get; set; }
     }
 }

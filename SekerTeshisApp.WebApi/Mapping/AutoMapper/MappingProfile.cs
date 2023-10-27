@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SekerTeshis.Entity;
 using SekerTeshis.Entity.DTO;
+using SekerTeshisApp.Application.Account.Responses;
 
 namespace SekerTeshisApp.WebApi.Mapping.AutoMapper
 {
@@ -9,6 +10,8 @@ namespace SekerTeshisApp.WebApi.Mapping.AutoMapper
         public MappingProfile()
         {
             CreateMap<UserDtoForRegister, User>().ReverseMap();
+
+            CreateMap<TokenDto, LoginUserResponse>().ReverseMap();
         }
     }
 }

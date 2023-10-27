@@ -5,9 +5,14 @@ using AutoMapper;
 using System.Reflection;
 using FluentValidation.AspNetCore;
 using SekerTeshisApp.Application.ActionFilters;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute()));
 builder.Services.AddEndpointsApiExplorer();
@@ -18,6 +23,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("SekerTeshisApp.Application")));
 builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureFluentValidation();
+builder.Services.ConfigureServices();
+builder.Services.ConfigureMailServices(builder.Configuration);
 var app = builder.Build();
 
 
@@ -31,8 +38,9 @@ else
 {
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
+app.ConfigureExceptionHandler();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

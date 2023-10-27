@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshis.Entity.DTO;
 using SekerTeshis.Entity.Exception;
@@ -167,6 +168,14 @@ namespace SekerTeshisApp.Data.Concrete
             _user = await _userManager.FindByEmailAsync(userForAuthDto.Email);
             var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuthDto.Password));
             return result;
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync()
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(_user);
+
+            return token;
+
         }
     }
 }
