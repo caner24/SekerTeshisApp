@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SekerTeshis.Entity.DTO
 {
-    public record ConfirmMailDto : TokenDtoForManipulation
+    public record ForgottenPasswordDto
     {
-
+        public  string MailAdress { get; init; }
     }
 }

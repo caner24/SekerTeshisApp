@@ -18,25 +18,13 @@ namespace SekerTeshisApp.Application.Account.Handlers
     public class CreateUserCommandHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
     {
         private readonly IUserDal _userDal;
-        private readonly IMapper _mapper;
-        private readonly IMailSender _mailSender;
-        public CreateUserCommandHandler(IUserDal userDal, IMapper mapper, IMailSender mailSender)
+        public CreateUserCommandHandler(IUserDal userDal)
         {
             _userDal = userDal;
-            _mapper = mapper;
-            _mailSender = mailSender;
         }
         public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
-            string token = "";
-            var user = _mapper.Map<User>(request);
-            var result = await _userDal.RegisterUser(request);
-
-            if (result.Succeeded)
-            {
-                token = await _userDal.GenerateEmailConfirmationTokenAsync();
-            }
-
+            var (result, token) = await _userDal.RegisterUser(request);
             return new CreateUserResponse { IsCreated = result, Token = token };
         }
     }

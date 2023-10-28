@@ -1,5 +1,6 @@
 ﻿using MimeKit;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
+using SekerTeshisApp.Application.Mail.Abstract;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.Mail.Concrete
 {
-    public class MailSender
+    public class MailSender : IMailSender
     {
         private readonly EmailConfiguration _emailConfig;
 

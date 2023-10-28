@@ -58,29 +58,64 @@ namespace SekerTeshisApp.WebApi.Controllers
                 }
                 return BadRequest(identityResult);
             }
-            var callback = Url.Action(nameof(ResetPassword), "Account", new { identityResult.Token, email = user.Email }, Request.Scheme);
+            var callback = Url.Action(nameof(ConfirmEmail), "Account", new ConfirmMailRequest { Token = identityResult.Token, Mail = user.Email }, Request.Scheme);
             var message = new Message(new string[] { user.Email }, "Mail Onaylama", MailBody.DefaultMailBody(user.Email.Substring(0, user.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", callback.ToString()), null);
             await _mailSender.SendEmailAsync(message);
             return StatusCode(201);
         }
 
-        [HttpGet("resetPassword")]
-        public IActionResult ResetPassword()
+        [HttpPost("forgottonPassword")]
+        public async Task<IActionResult> ForgottenPassword([FromBody] ForgottenPasswordRequest forgottenPasswordRequest)
         {
+            var resetPassword = await _mediator.Send(forgottenPasswordRequest);
 
-
-            return Ok();
+            var message = new Message(new string[] { resetPassword.MailAdress }, "Şifre Sifirlama", MailBody.MailBodyConfirmation(resetPassword.MailAdress.Substring(0, resetPassword.MailAdress.IndexOf("@")), "Şifrenizi Sifirlayin", "2 hour", resetPassword.Token), null);
+            await _mailSender.SendEmailAsync(message);
+            var msg = new
+            {
+                Status = "İlgili mail adresinize şifre sifirlama linki gönderildi"
+            };
+            return Ok(msg);
         }
 
-        [HttpGet]
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest resetPasswordRequest)
+        {
+            var resetPassword = await _mediator.Send(resetPasswordRequest);
+
+            if (!resetPassword.Result.Succeeded)
+            {
+                foreach (var item in resetPassword.Result.Errors)
+                {
+                    ModelState.TryAddModelError(item.Code, item.Description);
+                }
+                return BadRequest(resetPassword);
+            }
+            var msg = new
+            {
+                Status = "Şifreniz başarili bir şekilde değiştirildi."
+            };
+            return Ok(msg);
+        }
+
+        [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmMailRequest confirmMailRequest)
         {
-            ////var user = await _userManager.FindByEmailAsync(email);
-            ////if (user == null)
-            ////    return View("Error");
-            //var result = await _userManager.ConfirmEmailAsync(user, token);
+            var emailConfirm = await _mediator.Send(confirmMailRequest);
 
-            return Ok();
+            if (!emailConfirm.Result.Succeeded)
+            {
+                foreach (var item in emailConfirm.Result.Errors)
+                {
+                    ModelState.TryAddModelError(item.Code, item.Description);
+                }
+                return BadRequest(emailConfirm);
+            }
+            var msg = new
+            {
+                Status = "Email adresiniz başarili bir şekilde onaylanmiştir"
+            };
+            return Ok(msg);
         }
     }
 }

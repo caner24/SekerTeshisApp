@@ -21,6 +21,8 @@ namespace SekerTeshisApp.WebApi.Extentions
                     {
                         context.Response.StatusCode = contextFeature.Error switch
                         {
+                            EmailNotConfirm => StatusCodes.Status401Unauthorized,
+                            NotFoundException => StatusCodes.Status404NotFound,
                             EmailPasswordException => StatusCodes.Status404NotFound,
                             _ => StatusCodes.Status500InternalServerError
                         };

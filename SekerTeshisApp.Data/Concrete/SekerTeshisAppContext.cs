@@ -18,11 +18,11 @@ namespace SekerTeshisApp.Data.Concrete
 
         }
 
+        public DbSet<User> User { get; set; }
         public DbSet<Diabetes> Diabetes { get; set; }
         public DbSet<DiabetesDetail> DiabetesDetail { get; set; }
         public DbSet<Exercises> Exercises { get; set; }
         public DbSet<Food> Food { get; set; }
-        public DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

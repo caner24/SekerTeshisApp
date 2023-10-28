@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SekerTeshis.Entity.DTO
 {
-    public record ConfirmMailDto : TokenDtoForManipulation
+    public abstract record TokenDtoForManipulation
     {
+        public string Mail { get; init; }
+        public string Token { get; init; }
 
     }
 }

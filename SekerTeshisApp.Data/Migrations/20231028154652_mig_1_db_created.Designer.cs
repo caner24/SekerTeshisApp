@@ -12,7 +12,7 @@ using SekerTeshisApp.Data.Concrete;
 namespace SekerTeshisApp.Data.Migrations
 {
     [DbContext(typeof(SekerTeshisAppContext))]
-    [Migration("20231027094349_mig_1_db_created")]
+    [Migration("20231028154652_mig_1_db_created")]
     partial class mig_1_db_created
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace SekerTeshisApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9ff8b6b9-87b1-4cfd-a446-cf28da8ac747",
+                            Id = "cba850e2-5bd3-4b73-8188-f1d3a62431ff",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d3e77f1c-a950-499a-ae55-3638c12f92f2",
+                            Id = "b83aa435-1afc-48df-a951-33dbd2a93e9b",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         });

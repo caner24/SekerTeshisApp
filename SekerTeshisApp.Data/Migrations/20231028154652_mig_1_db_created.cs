@@ -241,8 +241,8 @@ namespace SekerTeshisApp.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "9ff8b6b9-87b1-4cfd-a446-cf28da8ac747", null, "Admin", "ADMIN" },
-                    { "d3e77f1c-a950-499a-ae55-3638c12f92f2", null, "Default", "DEFAULT" }
+                    { "b83aa435-1afc-48df-a951-33dbd2a93e9b", null, "Default", "DEFAULT" },
+                    { "cba850e2-5bd3-4b73-8188-f1d3a62431ff", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

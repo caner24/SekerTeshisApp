@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.Account.Responses
 {
-    public class ConfirmMailResponse
+    public class ForgottenPasswordResponse
     {
-        public IdentityResult Result { get; set; }
+        public string Token { get; set; }
+        public string MailAdress { get; set; }
     }
 }

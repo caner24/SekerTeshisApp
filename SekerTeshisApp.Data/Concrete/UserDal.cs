@@ -7,6 +7,7 @@ using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshis.Entity.DTO;
 using SekerTeshis.Entity.Exception;
+using SekerTeshis.Entity.Exceptions;
 using SekerTeshisApp.Data.Abstract;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace SekerTeshisApp.Data.Concrete
             _userManager = userManager;
             _configuration = configuration;
         }
+
         public async Task<TokenDto> CreateToken(bool populateExp)
         {
             var signinCredentials = GetSignInCredentials();
@@ -64,6 +66,17 @@ namespace SekerTeshisApp.Data.Concrete
                 rng.GetBytes(randomNumber);
                 return Convert.ToBase64String(randomNumber);
             }
+        }
+
+        public async Task<IdentityResult> ConfirmMailAsync(string mail, string token)
+        {
+            var searchedUser = await _userManager.FindByEmailAsync(mail);
+            if (searchedUser == null)
+                throw new NotFoundException();
+
+            var result = await _userManager.ConfirmEmailAsync(searchedUser, token);
+            return result;
+
         }
 
         public JwtSecurityToken GenerateTokenOptions(SigningCredentials signinCredentials, List<Claim> claims)
@@ -151,7 +164,7 @@ namespace SekerTeshisApp.Data.Concrete
             return await CreateToken(populateExp: false);
         }
 
-        public async Task<IdentityResult> RegisterUser(UserDtoForRegister userForRegistrationDto)
+        public async Task<(IdentityResult, string)> RegisterUser(UserDtoForRegister userForRegistrationDto)
         {
             var user = _mapper.Map<User>(userForRegistrationDto);
 
@@ -159,23 +172,53 @@ namespace SekerTeshisApp.Data.Concrete
                 .CreateAsync(user, userForRegistrationDto.Password);
 
             if (result.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(user, "DEFAULT");
-            return result;
+                var token = await GenerateEmailConfirmationTokenAsync(user);
+                return (result, token);
+            }
+            return (result, "");
         }
 
         public async Task<bool> ValidateUser(UserDtoForManipulation userForAuthDto)
         {
+            bool result = false;
             _user = await _userManager.FindByEmailAsync(userForAuthDto.Email);
-            var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuthDto.Password));
+            if (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuthDto.Password))
+            {
+                if (!_user.EmailConfirmed)
+                    throw new EmailNotConfirm();
+
+                result = true;
+            }
             return result;
         }
-
-        public async Task<string> GenerateEmailConfirmationTokenAsync()
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
         {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(_user);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             return token;
+        }
+        public async Task<string> CreatePasswordTokenAsync(string mail)
+        {
+            var forgottenUser = await _userManager.FindByEmailAsync(mail);
+            if (forgottenUser != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(forgottenUser);
+                return token;
+            }
+            throw new NotFoundException();
+        }
 
+        public async Task<IdentityResult> ResetPasswordAsync(string mail, string token, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(mail);
+            if (user != null)
+            {
+                var resetPassword = await _userManager.ResetPasswordAsync(user, token, password);
+                return resetPassword;
+            }
+            throw new NotFoundException();
         }
     }
 }

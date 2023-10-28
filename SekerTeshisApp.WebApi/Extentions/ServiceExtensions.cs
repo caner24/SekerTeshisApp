@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshisApp.Application;
+using SekerTeshisApp.Application.Mail.Abstract;
+using SekerTeshisApp.Application.Mail.Concrete;
 using SekerTeshisApp.Data.Abstract;
 using SekerTeshisApp.Data.Concrete;
 using System.Reflection;
@@ -84,8 +86,10 @@ namespace SekerTeshisApp.WebApi.Extentions
         .GetSection("EmailConfiguration")
         .Get<EmailConfiguration>();
 
-            services.AddSingleton(emailConfig);
-            services.AddSingleton<IMailService, MailService>();
+            if (emailConfig != null)
+                services.AddSingleton(emailConfig);
+
+            services.AddSingleton<IMailSender, MailSender>();
         }
     }
 }

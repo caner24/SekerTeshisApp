@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.Account.Responses
 {
-    public class ConfirmMailResponse
+    public class ResetPasswordResponse
     {
         public IdentityResult Result { get; set; }
+
     }
 }
