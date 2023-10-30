@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeherTeshisApp.Application.Account.Responses
+namespace SekerTeshisApp.Application.CQRS.Account.Responses
 {
     public class CreateUserResponse
     {

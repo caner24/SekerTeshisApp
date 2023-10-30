@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json.Linq;
-using SeherTeshisApp.Application.Account.Requests;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshis.Entity.DTO;
 using SekerTeshis.Entity.Exceptions;
-using SekerTeshisApp.Application.Account.Requests;
 using SekerTeshisApp.Application.ActionFilters;
+using SekerTeshisApp.Application.CQRS.Account.Requests;
 using SekerTeshisApp.Application.Mail.Abstract;
+using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 using SekerTeshisApp.WebApi.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -21,14 +21,24 @@ namespace SekerTeshisApp.WebApi.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
+
+        private readonly MyMessageConsumer _messageConsumer;
         private readonly UserManager<User> _userManager;
         private readonly IMediator _mediator;
         private readonly IMailSender _mailSender;
-        public AccountController(UserManager<User> user, IMediator mediator, IMailSender mailSender)
+        public AccountController(UserManager<User> user, IMediator mediator, IMailSender mailSender, MyMessageConsumer messageConsumer)
         {
             _userManager = user;
             _mediator = mediator;
             _mailSender = mailSender;
+            _messageConsumer = messageConsumer;
+        }
+
+        [HttpGet("consuming")]
+        public IActionResult StartConsuming()
+        {
+            _messageConsumer.StartConsuming();
+            return Ok("Consumer başlatıldı.");
         }
 
         [HttpPost("login")]
@@ -60,7 +70,9 @@ namespace SekerTeshisApp.WebApi.Controllers
             }
             var callback = Url.Action(nameof(ConfirmEmail), "Account", new ConfirmMailRequest { Token = identityResult.Token, Mail = user.Email }, Request.Scheme);
             var message = new Message(new string[] { user.Email }, "Mail Onaylama", MailBody.DefaultMailBody(user.Email.Substring(0, user.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", callback.ToString()), null);
-            await _mailSender.SendEmailAsync(message);
+
+            //await _mailSender.SendEmailAsync(message);
+            Publisher.CreateQueue(message, false);
             return StatusCode(201);
         }
 

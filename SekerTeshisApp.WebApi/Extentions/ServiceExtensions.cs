@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
 using SekerTeshisApp.Application;
@@ -15,6 +17,7 @@ using SekerTeshisApp.Data.Concrete;
 using System.Reflection;
 using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 
 namespace SekerTeshisApp.WebApi.Extentions
 {
@@ -91,5 +94,18 @@ namespace SekerTeshisApp.WebApi.Extentions
 
             services.AddSingleton<IMailSender, MailSender>();
         }
+
+        public static void ConfigureRabbitMQ(this IServiceCollection services)
+        {
+            services.AddSingleton<MyMessageConsumer>();
+
+        }
+        public static void RabbitMQApp(this WebApplication app)
+        {
+            var messageConsumer = app.Services.GetService<MyMessageConsumer>();
+            if (messageConsumer != null)
+                messageConsumer.StartConsuming();
+        }
     }
+
 }

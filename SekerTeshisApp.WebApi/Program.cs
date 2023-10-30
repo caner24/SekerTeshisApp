@@ -25,6 +25,7 @@ builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureFluentValidation();
 builder.Services.ConfigureServices();
 builder.Services.ConfigureMailServices(builder.Configuration);
+builder.Services.ConfigureRabbitMQ();
 var app = builder.Build();
 
 
@@ -38,6 +39,7 @@ else
 {
     app.UseHsts();
 }
+app.RabbitMQApp();
 app.UseHttpsRedirection();
 app.ConfigureExceptionHandler();
 

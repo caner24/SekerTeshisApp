@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SekerTeshisApp.Application.Account.Responses
+namespace SekerTeshisApp.Application.CQRS.Account.Responses
 {
     public class ResetPasswordResponse
     {

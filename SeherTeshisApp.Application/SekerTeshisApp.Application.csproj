@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Admin\Handlers\" />
-    <Folder Include="Admin\Responses\" />
-    <Folder Include="Admin\Requests\" />
-    <Folder Include="App\Handlers\" />
-    <Folder Include="App\Responses\" />
-    <Folder Include="App\Requests\" />
+    <Folder Include="CQRS\Admin\Handlers\" />
+    <Folder Include="CQRS\Admin\Responses\" />
+    <Folder Include="CQRS\Admin\Requests\" />
+    <Folder Include="CQRS\App\Handlers\" />
+    <Folder Include="CQRS\App\Responses\" />
+    <Folder Include="CQRS\App\Requests\" />
   </ItemGroup>
 
   <ItemGroup>

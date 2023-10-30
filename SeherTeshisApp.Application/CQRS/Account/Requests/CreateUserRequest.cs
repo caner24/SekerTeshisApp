@@ -1,13 +1,13 @@
 ﻿using MediatR;
-using SeherTeshisApp.Application.Account.Responses;
 using SekerTeshis.Entity.DTO;
+using SekerTeshisApp.Application.CQRS.Account.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeherTeshisApp.Application.Account.Requests
+namespace SekerTeshisApp.Application.CQRS.Account.Requests
 {
     public record CreateUserRequest : UserDtoForRegister, IRequest<CreateUserResponse>
     {

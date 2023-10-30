@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using SeherTeshisApp.Application.Account.Requests;
-using SeherTeshisApp.Application.Account.Responses;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
+using SekerTeshisApp.Application.CQRS.Account.Requests;
+using SekerTeshisApp.Application.CQRS.Account.Responses;
 using SekerTeshisApp.Application.Mail.Abstract;
 using SekerTeshisApp.Data.Abstract;
 using System;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SekerTeshisApp.Application.Account.Handlers
+namespace SekerTeshisApp.Application.CQRS.Account.Handlers
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
     {

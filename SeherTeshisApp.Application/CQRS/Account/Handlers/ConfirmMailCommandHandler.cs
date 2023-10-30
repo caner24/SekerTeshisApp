@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using SekerTeshisApp.Application.Account.Requests;
-using SekerTeshisApp.Application.Account.Responses;
+using SekerTeshisApp.Application.CQRS.Account.Requests;
+using SekerTeshisApp.Application.CQRS.Account.Responses;
 using SekerTeshisApp.Data.Abstract;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SekerTeshisApp.Application.Account.Handlers
+namespace SekerTeshisApp.Application.CQRS.Account.Handlers
 {
     public class ConfirmMailCommandHandler : IRequestHandler<ConfirmMailRequest, ConfirmMailResponse>
     {

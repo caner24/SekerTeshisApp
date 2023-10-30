@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SekerTeshis.Entity;
 using SekerTeshis.Entity.DTO;
-using SekerTeshisApp.Application.Account.Responses;
+using SekerTeshisApp.Application.CQRS.Account.Responses;
 
 namespace SekerTeshisApp.WebApi.Mapping.AutoMapper
 {
