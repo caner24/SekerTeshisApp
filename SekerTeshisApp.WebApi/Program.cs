@@ -39,6 +39,8 @@ else
 {
     app.UseHsts();
 }
+
+app.UseCors("CorsPolicy");
 app.RabbitMQApp();
 app.UseHttpsRedirection();
 app.ConfigureExceptionHandler();

@@ -9,6 +9,12 @@ using System.Threading.Channels;
 using SekerTeshisApp.Application.Mail.Abstract;
 using Newtonsoft.Json;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
+using SekerTeshisApp.WebApi.Models;
+using SekerTeshisApp.Application.CQRS.Account.Responses;
+using Microsoft.AspNetCore.Identity;
+using SekerTeshis.Entity;
+using SekerTeshisApp.Application.CQRS.Account.Requests;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
 {
@@ -42,8 +48,9 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
             {
                 var body = ea.Body.ToArray();
                 var messageString = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject<Message>(messageString);
-                await _mailSender.SendEmailAsync(message);
+                var message = JsonConvert.DeserializeObject<ForgottenPasswordResponse>(messageString);
+                var sendMessage = new Message(new string[] { message.MailAdress }, "Şifre Sifirlama", MailBody.MailBodyConfirmation(message.MailAdress.Substring(0, message.MailAdress.IndexOf("@")), "Şifrenizi Sifirlayin", "2 hour", message.Token), null);
+                await _mailSender.SendEmailAsync(sendMessage);
                 Serilog.Log.Information(" Queue message was sent");
             };
 
@@ -52,8 +59,9 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
             {
                 var body = ea.Body.ToArray();
                 var messageString = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject<Message>(messageString);
-                await _mailSender.SendEmailAsync(message);
+                var message = JsonConvert.DeserializeObject<ConfirmMailModel>(messageString);
+                var sendMessage = new Message(new string[] { message.Email }, "Mail Onaylama", MailBody.DefaultMailBody(message.Email.Substring(0, message.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", message.Callback.ToString()), null);
+                await _mailSender.SendEmailAsync(sendMessage);
                 Serilog.Log.Information(" Queue message was sent");
             };
 

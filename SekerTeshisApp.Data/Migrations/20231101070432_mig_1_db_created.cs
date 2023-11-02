@@ -185,7 +185,8 @@ namespace SekerTeshisApp.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MeasureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DiabetesId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    DiabetesId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MeasureValue = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,8 +242,8 @@ namespace SekerTeshisApp.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "b83aa435-1afc-48df-a951-33dbd2a93e9b", null, "Default", "DEFAULT" },
-                    { "cba850e2-5bd3-4b73-8188-f1d3a62431ff", null, "Admin", "ADMIN" }
+                    { "2cd4cb32-50d0-4890-9290-bc7469c98086", null, "Default", "DEFAULT" },
+                    { "686b83a9-290f-45c5-bfb9-3b5304c16827", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

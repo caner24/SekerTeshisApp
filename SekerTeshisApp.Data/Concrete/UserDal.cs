@@ -220,5 +220,10 @@ namespace SekerTeshisApp.Data.Concrete
             }
             throw new NotFoundException();
         }
+
+        public string GetUserId()
+        {
+            return _user.Id;
+        }
     }
 }

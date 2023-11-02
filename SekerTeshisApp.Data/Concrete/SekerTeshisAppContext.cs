@@ -28,7 +28,14 @@ namespace SekerTeshisApp.Data.Concrete
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"SERVER=CANER;INITIAL CATALOG=SekerTeshisApp;INTEGRATED SECURITY=True;Encrypt=True;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer(@"SERVER=CANER;INITIAL CATALOG=SekerTeshisApp;INTEGRATED SECURITY=True;Encrypt=True;TrustServerCertificate=True",
+                       sqlServerOptionsAction: sqlOptions =>
+                       {
+                           sqlOptions.EnableRetryOnFailure(
+                               maxRetryCount: 5, 
+                               maxRetryDelay: TimeSpan.FromSeconds(30), 
+                               errorNumbersToAdd: null);  
+                       });
             }
             base.OnConfiguring(optionsBuilder);
         }

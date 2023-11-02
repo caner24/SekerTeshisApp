@@ -51,8 +51,10 @@ namespace SekerTeshisApp.WebApi.Controllers
             var response = new
             {
                 AccesToken = identityResult.AccessToken,
-                RefreshToken = identityResult.RefreshToken
+                RefreshToken = identityResult.RefreshToken,
+                UserId = identityResult.UserId,
             };
+
             return Ok(response);
         }
 
@@ -69,10 +71,11 @@ namespace SekerTeshisApp.WebApi.Controllers
                 return BadRequest(identityResult);
             }
             var callback = Url.Action(nameof(ConfirmEmail), "Account", new ConfirmMailRequest { Token = identityResult.Token, Mail = user.Email }, Request.Scheme);
-            var message = new Message(new string[] { user.Email }, "Mail Onaylama", MailBody.DefaultMailBody(user.Email.Substring(0, user.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", callback.ToString()), null);
+            //var message = new Message(new string[] { user.Email }, "Mail Onaylama", MailBody.DefaultMailBody(user.Email.Substring(0, user.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", callback.ToString()), null);
+            ConfirmMailModel confirmMailModel = new ConfirmMailModel { Email = user.Email, Callback = callback };
 
             //await _mailSender.SendEmailAsync(message);
-            Publisher.CreateQueue(message, false);
+            Publisher.CreateMailConfirmQuaqe(confirmMailModel, false);
             return StatusCode(201);
         }
 
@@ -80,9 +83,7 @@ namespace SekerTeshisApp.WebApi.Controllers
         public async Task<IActionResult> ForgottenPassword([FromBody] ForgottenPasswordRequest forgottenPasswordRequest)
         {
             var resetPassword = await _mediator.Send(forgottenPasswordRequest);
-
-            var message = new Message(new string[] { resetPassword.MailAdress }, "Şifre Sifirlama", MailBody.MailBodyConfirmation(resetPassword.MailAdress.Substring(0, resetPassword.MailAdress.IndexOf("@")), "Şifrenizi Sifirlayin", "2 hour", resetPassword.Token), null);
-            await _mailSender.SendEmailAsync(message);
+            Publisher.CraeteForgetEmailQuaqe(resetPassword, false);
             var msg = new
             {
                 Status = "İlgili mail adresinize şifre sifirlama linki gönderildi"

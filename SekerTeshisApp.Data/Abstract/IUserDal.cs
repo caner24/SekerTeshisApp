@@ -28,7 +28,9 @@ namespace SekerTeshisApp.Data.Abstract
         Task<IdentityResult> ConfirmMailAsync(string mail, string token);
         Task<string> CreatePasswordTokenAsync(string mail);
 
-        Task<IdentityResult> ResetPasswordAsync(string mail,string token,string password);
+        Task<IdentityResult> ResetPasswordAsync(string mail, string token, string password);
+
+        string GetUserId();
 
     }
 }

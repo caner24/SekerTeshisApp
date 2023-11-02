@@ -12,7 +12,7 @@ using SekerTeshisApp.Data.Concrete;
 namespace SekerTeshisApp.Data.Migrations
 {
     [DbContext(typeof(SekerTeshisAppContext))]
-    [Migration("20231028154652_mig_1_db_created")]
+    [Migration("20231101070432_mig_1_db_created")]
     partial class mig_1_db_created
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace SekerTeshisApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cba850e2-5bd3-4b73-8188-f1d3a62431ff",
+                            Id = "686b83a9-290f-45c5-bfb9-3b5304c16827",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b83aa435-1afc-48df-a951-33dbd2a93e9b",
+                            Id = "2cd4cb32-50d0-4890-9290-bc7469c98086",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         });
@@ -200,6 +200,9 @@ namespace SekerTeshisApp.Data.Migrations
 
                     b.Property<DateTime>("MeasureDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MeasureValue")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

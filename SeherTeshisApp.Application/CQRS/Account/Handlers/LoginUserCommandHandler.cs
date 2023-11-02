@@ -32,7 +32,7 @@ namespace SekerTeshisApp.Application.CQRS.Account.Handlers
 
             var tokenMap = _mapper.Map<LoginUserResponse>(tokenDto);
             tokenMap.IsLoggedIn = true;
-
+            tokenMap.UserId = _userDal.GetUserId();
             return tokenMap;
 
         }

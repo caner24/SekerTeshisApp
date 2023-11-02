@@ -27,7 +27,13 @@ namespace SekerTeshisApp.WebApi.Extentions
         {
             services.AddDbContext<SekerTeshisAppContext>(options =>
             options.UseSqlServer(
-               config.GetConnectionString("sqlConnection")));
+               config.GetConnectionString("sqlConnection"), sqlServerOptionsAction: sqlOptions =>
+               {
+                   sqlOptions.EnableRetryOnFailure(
+                       maxRetryCount: 5,
+                       maxRetryDelay: TimeSpan.FromSeconds(30),
+                       errorNumbersToAdd: null);
+               }));
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)
@@ -105,6 +111,18 @@ namespace SekerTeshisApp.WebApi.Extentions
             var messageConsumer = app.Services.GetService<MyMessageConsumer>();
             if (messageConsumer != null)
                 messageConsumer.StartConsuming();
+        }
+
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                );
+            });
         }
     }
 

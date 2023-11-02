@@ -11,7 +11,12 @@ namespace SekerTeshisApp.WebApi.Controllers
         [HttpGet("foodList")]
         public IActionResult FoodList()
         {
-            return View();
+            var foodList = new
+            {
+                FoodName = "Tarhana Corbasi",
+                FoodCode = 123
+            };
+            return View(foodList);
         }
 
         [HttpGet("exercisesList")]
