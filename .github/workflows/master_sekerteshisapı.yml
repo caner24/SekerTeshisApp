@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'SekerTeshisApı'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5B2332B2EDCD44F7978C6CDB3333C615 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_221D2EF9B292407F9279A0836E0E5F31 }}
           package: .
