@@ -27,7 +27,7 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
         public MyMessageConsumer(IMailSender mailSender)
         {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.HostName = "localhost";
+            factory.Uri =new Uri("amqps://yozwqixo:uL3YK7SRvAsJQ82X72jGCDZe_75WPHn_@cow.rmq2.cloudamqp.com/yozwqixo");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

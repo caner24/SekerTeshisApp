@@ -51,13 +51,13 @@ namespace SekerTeshisApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "686b83a9-290f-45c5-bfb9-3b5304c16827",
+                            Id = "2d4a74d3-8f39-48ed-a471-9fa6f446c11e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2cd4cb32-50d0-4890-9290-bc7469c98086",
+                            Id = "8394460b-ea4b-44fe-9702-bf5aa54893df",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         });

@@ -11,5 +11,7 @@ namespace SekerTeshisApp.Application.CQRS.Account.Responses
     {
         public IdentityResult Result { get; set; }
 
+        public string Message { get; set; }
+
     }
 }

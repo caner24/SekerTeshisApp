@@ -18,7 +18,8 @@ using System.Text.Json.Serialization;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/account")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class AccountController : Controller
     {
 
@@ -53,6 +54,7 @@ namespace SekerTeshisApp.WebApi.Controllers
                 AccesToken = identityResult.AccessToken,
                 RefreshToken = identityResult.RefreshToken,
                 UserId = identityResult.UserId,
+                Message = "Giris"
             };
 
             return Ok(response);
@@ -71,12 +73,10 @@ namespace SekerTeshisApp.WebApi.Controllers
                 return BadRequest(identityResult);
             }
             var callback = Url.Action(nameof(ConfirmEmail), "Account", new ConfirmMailRequest { Token = identityResult.Token, Mail = user.Email }, Request.Scheme);
-            //var message = new Message(new string[] { user.Email }, "Mail Onaylama", MailBody.DefaultMailBody(user.Email.Substring(0, user.Email.IndexOf("@")), "Lütfen Mailinizi Onaylayiniz ", "2 hour", callback.ToString()), null);
             ConfirmMailModel confirmMailModel = new ConfirmMailModel { Email = user.Email, Callback = callback };
-
-            //await _mailSender.SendEmailAsync(message);
             Publisher.CreateMailConfirmQuaqe(confirmMailModel, false);
-            return StatusCode(201);
+
+            return Ok(identityResult);
         }
 
         [HttpPost("forgottonPassword")]
@@ -84,11 +84,8 @@ namespace SekerTeshisApp.WebApi.Controllers
         {
             var resetPassword = await _mediator.Send(forgottenPasswordRequest);
             Publisher.CraeteForgetEmailQuaqe(resetPassword, false);
-            var msg = new
-            {
-                Status = "İlgili mail adresinize şifre sifirlama linki gönderildi"
-            };
-            return Ok(msg);
+            resetPassword.Message = "İlgili mail adresinize şifre sifirlama linki gönderildi";
+            return Ok(resetPassword);
         }
 
         [HttpPost("resetPassword")]
@@ -104,11 +101,8 @@ namespace SekerTeshisApp.WebApi.Controllers
                 }
                 return BadRequest(resetPassword);
             }
-            var msg = new
-            {
-                Status = "Şifreniz başarili bir şekilde değiştirildi."
-            };
-            return Ok(msg);
+            resetPassword.Message = "Şifreniz başarili bir şekilde değiştirildi.";
+            return Ok(resetPassword);
         }
 
         [HttpGet("confirmEmail")]
@@ -118,17 +112,14 @@ namespace SekerTeshisApp.WebApi.Controllers
 
             if (!emailConfirm.Result.Succeeded)
             {
-                foreach (var item in emailConfirm.Result.Errors)
+                foreach (var error in emailConfirm.Result.Errors)
                 {
-                    ModelState.TryAddModelError(item.Code, item.Description);
+                    ModelState.TryAddModelError(error.Code, error.Description);
                 }
-                return BadRequest(emailConfirm);
+                return BadRequest(ModelState);
             }
-            var msg = new
-            {
-                Status = "Email adresiniz başarili bir şekilde onaylanmiştir"
-            };
-            return Ok(msg);
+
+            return Content("Email adresiniz başarılı bir şekilde onaylanmıştır");
         }
     }
 }

@@ -10,5 +10,7 @@ namespace SekerTeshisApp.Application.CQRS.Account.Responses
     {
         public string Token { get; set; }
         public string MailAdress { get; set; }
+
+        public string Message { get; set; }
     }
 }

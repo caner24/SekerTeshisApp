@@ -16,7 +16,7 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute()));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.ConfigureSqlServer(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.AddAutoMapper(typeof(Program));
@@ -29,11 +29,12 @@ builder.Services.ConfigureRabbitMQ();
 var app = builder.Build();
 
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
 }
 else
 {

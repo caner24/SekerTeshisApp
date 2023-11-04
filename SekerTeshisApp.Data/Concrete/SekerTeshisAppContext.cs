@@ -28,7 +28,7 @@ namespace SekerTeshisApp.Data.Concrete
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"SERVER=CANER;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Canomben-2434;INTEGRATED SECURITY=True;Encrypt=True;TrustServerCertificate=True",
+                optionsBuilder.UseSqlServer(@"SERVER=database-1.c8fhrppa5bu2.eu-north-1.rds.amazonaws.com;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Canomben-2434;Encrypt=True;TrustServerCertificate=True",
                        sqlServerOptionsAction: sqlOptions =>
                        {
                            sqlOptions.EnableRetryOnFailure(

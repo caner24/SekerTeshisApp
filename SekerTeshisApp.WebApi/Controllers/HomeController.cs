@@ -6,6 +6,7 @@ namespace SekerTeshisApp.WebApi.Controllers
     [Authorize]
     [ApiController]
     [Route("api/home")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class HomeController : Controller
     {
         [HttpGet("foodList")]
@@ -16,19 +17,19 @@ namespace SekerTeshisApp.WebApi.Controllers
                 FoodName = "Tarhana Corbasi",
                 FoodCode = 123
             };
-            return View(foodList);
+            return Ok(foodList);
         }
 
         [HttpGet("exercisesList")]
         public IActionResult ExercisesList()
         {
-            return View();
+            return Ok();
         }
 
         [HttpGet("index")]
         public IActionResult CalculateSugar()
         {
-            return View();
+            return Ok();
         }
     }
 }
