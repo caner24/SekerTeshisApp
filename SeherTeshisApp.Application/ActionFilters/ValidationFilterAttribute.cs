@@ -31,7 +31,6 @@ namespace SekerTeshisApp.Application.ActionFilters
             var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
             var validationContext = new ValidationContext<object>(param);
 
-
             if (validator != null)
             {
                 var validationResult = validator.Validate(validationContext);

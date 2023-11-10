@@ -15,17 +15,8 @@ namespace SekerTeshis.Entity
             Exercises = new Exercises();
         }
         public int Id { get; set; }
-        public enum Situation
-        {
-            Low,
-            Normal,
-            High
-        }
-        public enum MeasureType
-        {
-            Hungery,
-            Satiety
-        }
+        public string Situation { get; set; }
+        public string MeasureType { get; set; }
         public DateTime MeasureDate { get; set; }
         public string? DiabetesId { get; set; }
         public int MeasureValue { get; set; }

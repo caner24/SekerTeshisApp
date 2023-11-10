@@ -12,6 +12,8 @@ namespace SekerTeshisApp.WebApi.Mapping.AutoMapper
             CreateMap<UserDtoForRegister, User>().ReverseMap();
 
             CreateMap<TokenDto, LoginUserResponse>().ReverseMap();
+
+            CreateMap<DiabetDetailForDto, DiabetesDetail>().ReverseMap();
         }
     }
 }

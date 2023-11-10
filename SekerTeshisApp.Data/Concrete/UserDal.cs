@@ -167,6 +167,7 @@ namespace SekerTeshisApp.Data.Concrete
         public async Task<(IdentityResult, string)> RegisterUser(UserDtoForRegister userForRegistrationDto)
         {
             var user = _mapper.Map<User>(userForRegistrationDto);
+            user.Diabetess = new Diabetes { IsDiabetUser = false };
 
             var result = await _userManager
                 .CreateAsync(user, userForRegistrationDto.Password);

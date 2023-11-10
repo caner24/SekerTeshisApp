@@ -87,7 +87,8 @@ namespace SekerTeshisApp.WebApi.Extentions
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<IUserDal, UserDal>();
-
+            services.AddScoped<IDiabetesDal, DiabetesDal>();
+            services.AddScoped<IDiabetesDetailDal, DiabetesDetailDal>();
         }
 
         public static void ConfigureMailServices(this IServiceCollection services, IConfiguration config)
@@ -170,6 +171,7 @@ namespace SekerTeshisApp.WebApi.Extentions
                 });
             });
         }
+   
     }
 
 }

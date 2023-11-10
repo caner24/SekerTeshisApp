@@ -165,7 +165,9 @@ namespace SekerTeshisApp.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IsDiabetUser = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    IsDiabetUser = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsLockDown = table.Column<bool>(type: "bit", nullable: false),
+                    LastCalculateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,6 +186,8 @@ namespace SekerTeshisApp.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Situation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MeasureType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MeasureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiabetesId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     MeasureValue = table.Column<int>(type: "int", nullable: false)
@@ -242,8 +246,8 @@ namespace SekerTeshisApp.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2d4a74d3-8f39-48ed-a471-9fa6f446c11e", null, "Admin", "ADMIN" },
-                    { "8394460b-ea4b-44fe-9702-bf5aa54893df", null, "Default", "DEFAULT" }
+                    { "6a14d3d2-5d8e-4ed8-b5ed-b62a9d593efe", null, "Default", "DEFAULT" },
+                    { "eac19c69-a5f8-4847-9ecc-fe92b868f9d4", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -11,6 +11,8 @@ namespace SekerTeshis.Entity
     {
         public string Id { get; set; }
         public bool IsDiabetUser { get; set; }
+        public bool IsLockDown { get; set; }
+        public DateTime? LastCalculateDate { get; set; }
         public User? User { get; set; }
         public List<DiabetesDetail>? DiabetesDetail { get; set; }
     }

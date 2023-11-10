@@ -10,7 +10,6 @@
     <Folder Include="CQRS\Admin\Handlers\" />
     <Folder Include="CQRS\Admin\Responses\" />
     <Folder Include="CQRS\Admin\Requests\" />
-    <Folder Include="CQRS\Home\Handlers\" />
   </ItemGroup>
 
   <ItemGroup>

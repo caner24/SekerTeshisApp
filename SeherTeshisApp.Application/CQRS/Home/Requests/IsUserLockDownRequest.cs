@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SekerTeshis.Entity.DTO;
 using SekerTeshisApp.Application.CQRS.Home.Responses;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.CQRS.Home.Requests
 {
-    public record CalculateSugarRequest: DiabetDetailForDto,IRequest<CalculateSugarResponse>
+    public record IsUserLockDownRequest:IRequest<IsUserLockDownResponse>
     {
-
+        public string Id { get; init; }
     }
 }

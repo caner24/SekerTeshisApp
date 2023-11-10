@@ -9,18 +9,17 @@ namespace SekerTeshisApp.WebApi.Controllers
     [ApiExplorerSettings(GroupName = "v1")]
     public class AdminController : Controller
     {
-
         [HttpGet("userStatics")]
-        public IActionResult GetStatics()
+        public IActionResult GetUserStatics()
         {
+
             return Ok();
         }
+
         [HttpGet("getUser/{id}")]
-        public IActionResult GetStatics([FromBody] int id)
+        public IActionResult GetUserById([FromRoute] int id)
         {
             return Ok();
         }
-
-
     }
 }

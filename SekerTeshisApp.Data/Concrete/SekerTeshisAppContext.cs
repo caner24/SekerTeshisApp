@@ -13,9 +13,15 @@ namespace SekerTeshisApp.Data.Concrete
 {
     public class SekerTeshisAppContext : IdentityDbContext<User>
     {
+
         public SekerTeshisAppContext(DbContextOptions<SekerTeshisAppContext> context) : base(context)
         {
 
+        }
+
+        public SekerTeshisAppContext()
+        {
+            
         }
 
         public DbSet<User> User { get; set; }
@@ -28,7 +34,7 @@ namespace SekerTeshisApp.Data.Concrete
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"SERVER=database-1.c8fhrppa5bu2.eu-north-1.rds.amazonaws.com;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Canomben-2434;Encrypt=True;TrustServerCertificate=True",
+                optionsBuilder.UseSqlServer(@"SERVER=database-1.c8fhrppa5bu2.eu-north-1.rds.amazonaws.com;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Caner-2434;Encrypt=True;TrustServerCertificate=True",
                        sqlServerOptionsAction: sqlOptions =>
                        {
                            sqlOptions.EnableRetryOnFailure(

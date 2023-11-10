@@ -12,7 +12,7 @@ using SekerTeshisApp.Data.Concrete;
 namespace SekerTeshisApp.Data.Migrations
 {
     [DbContext(typeof(SekerTeshisAppContext))]
-    [Migration("20231104110559_mig_1_db_created")]
+    [Migration("20231110181433_mig_1_db_created")]
     partial class mig_1_db_created
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace SekerTeshisApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2d4a74d3-8f39-48ed-a471-9fa6f446c11e",
+                            Id = "eac19c69-a5f8-4847-9ecc-fe92b868f9d4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8394460b-ea4b-44fe-9702-bf5aa54893df",
+                            Id = "6a14d3d2-5d8e-4ed8-b5ed-b62a9d593efe",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         });
@@ -182,6 +182,12 @@ namespace SekerTeshisApp.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("IsLockDown")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastCalculateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Diabetes");
@@ -201,8 +207,16 @@ namespace SekerTeshisApp.Data.Migrations
                     b.Property<DateTime>("MeasureDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("MeasureType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MeasureValue")
                         .HasColumnType("int");
+
+                    b.Property<string>("Situation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

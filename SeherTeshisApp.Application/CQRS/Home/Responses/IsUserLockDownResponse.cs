@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.CQRS.Home.Responses
 {
-    public class CalculateSugarResponse
+    public class IsUserLockDownResponse
     {
-        public DateTime DateTime { get; set; }
-        public string Type { get; set; }
+        public bool IsLockDown { get; set; }
     }
 }
