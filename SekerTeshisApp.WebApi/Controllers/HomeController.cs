@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SekerTeshisApp.Application.CQRS.Home.Requests;
 using SekerTeshisApp.Application.CQRS.Home.Responses;
 using SekerTeshisApp.Application.Mail.Abstract;
@@ -8,7 +9,6 @@ using SekerTeshisApp.Application.Mail.Abstract;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class HomeController : Controller
@@ -31,6 +31,13 @@ namespace SekerTeshisApp.WebApi.Controllers
         public IActionResult ExercisesList()
         {
             return Ok();
+        }
+
+        [HttpGet("getLast7Diabetes")]
+        public async Task<IActionResult> Last7Diabetes([FromQuery] Last7DiabetesRequest last7DiabetesRequest)
+        {
+            var response = await _mediator.Send(last7DiabetesRequest);
+            return Ok(response);
         }
 
         [HttpGet("getCalculateStatus")]

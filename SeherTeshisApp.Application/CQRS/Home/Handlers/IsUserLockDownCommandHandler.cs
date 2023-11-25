@@ -24,7 +24,7 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
             var diabetesDetail = await _diabetesDetailDal.GetByIdentity(x => x.DiabetesId == request.Id).OrderBy(x => x.MeasureDate).LastOrDefaultAsync();
             if (diabetesDetail != null)
             {
-                if (diabetesDetail.MeasureDate.Hour <= DateTime.UtcNow.Hour - 7)
+                if (diabetesDetail.MeasureDate.AddHours(7) <= DateTime.UtcNow)
                     return new IsUserLockDownResponse { IsLockDown = false };
                 else
                     return new IsUserLockDownResponse { IsLockDown = true };

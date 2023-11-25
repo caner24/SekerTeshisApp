@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using SekerTeshis.Entity;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace SekerTeshisApp.Data.Concrete
 
         public SekerTeshisAppContext()
         {
-            
+
         }
 
         public DbSet<User> User { get; set; }
@@ -37,10 +38,11 @@ namespace SekerTeshisApp.Data.Concrete
                 optionsBuilder.UseSqlServer(@"SERVER=database-1.c8fhrppa5bu2.eu-north-1.rds.amazonaws.com;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Caner-2434;Encrypt=True;TrustServerCertificate=True",
                        sqlServerOptionsAction: sqlOptions =>
                        {
+
                            sqlOptions.EnableRetryOnFailure(
-                               maxRetryCount: 5, 
-                               maxRetryDelay: TimeSpan.FromSeconds(30), 
-                               errorNumbersToAdd: null);  
+                               maxRetryCount: 5,
+                               maxRetryDelay: TimeSpan.FromSeconds(30),
+                               errorNumbersToAdd: null);
                        });
             }
             base.OnConfiguring(optionsBuilder);

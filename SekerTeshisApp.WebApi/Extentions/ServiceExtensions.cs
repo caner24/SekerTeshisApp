@@ -3,22 +3,18 @@ using MailKit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
 using SekerTeshis.Core.CrossCuttingConcerns.MailService;
 using SekerTeshis.Entity;
-using SekerTeshisApp.Application;
 using SekerTeshisApp.Application.Mail.Abstract;
 using SekerTeshisApp.Application.Mail.Concrete;
 using SekerTeshisApp.Data.Abstract;
 using SekerTeshisApp.Data.Concrete;
-using System.Reflection;
 using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 using Microsoft.OpenApi.Models;
+using System.Threading.RateLimiting;
+
 
 namespace SekerTeshisApp.WebApi.Extentions
 {
@@ -114,7 +110,21 @@ namespace SekerTeshisApp.WebApi.Extentions
             if (messageConsumer != null)
                 messageConsumer.StartConsuming();
         }
-
+        public static void ConfigureResponseCaching(this IServiceCollection services)
+        {
+            services.AddResponseCaching();
+        }
+        public static void ConfigureHttpResponseCache(this IServiceCollection services)
+        {
+            services.AddHttpCacheHeaders(extOptions =>
+            {
+                extOptions.MaxAge = 90;
+                extOptions.CacheLocation = Marvin.Cache.Headers.CacheLocation.Public;
+            }, validationModelOptionsAction =>
+            {
+                validationModelOptionsAction.MustRevalidate = true;
+            });
+        }
         public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
@@ -126,7 +136,6 @@ namespace SekerTeshisApp.WebApi.Extentions
                 );
             });
         }
-
         public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(s =>
@@ -171,7 +180,38 @@ namespace SekerTeshisApp.WebApi.Extentions
                 });
             });
         }
-   
-    }
 
+        public static void ConfigureRateLimiting(this IServiceCollection services)
+        {
+            services.AddRateLimiter(options =>
+            {
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+          RateLimitPartition.GetFixedWindowLimiter(
+              partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+              factory: partition => new FixedWindowRateLimiterOptions
+              {
+                  AutoReplenishment = true,
+                  PermitLimit = 5,
+                  QueueLimit = 2,
+                  QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                  Window = TimeSpan.FromSeconds(30)
+              }));
+                options.OnRejected = async (context, token) =>
+                {
+                    context.HttpContext.Response.StatusCode = 429;
+                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                    {
+                        await context.HttpContext.Response.WriteAsync(
+                            $"Çok fazla istekde bulundunuz. Lütfen sonra tekrar deneyin {retryAfter.TotalMinutes} dakika. ", cancellationToken: token);
+                    }
+                    else
+                    {
+                        await context.HttpContext.Response.WriteAsync(
+                            "Çok fazla istekde bulundunuz. Lütfen sonra tekrar deneyin. ", cancellationToken: token);
+                    }
+                };
+            });
+        }
+
+    }
 }

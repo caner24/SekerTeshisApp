@@ -34,7 +34,7 @@ namespace SekerTeshis.Core.DataAcess.EFCore
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return filter == null ? _tContext.Set<TEntity>() : _tContext.Set<TEntity>().Where(filter);
         }
 
         public IQueryable<TEntity> GetByIdentity(Expression<Func<TEntity, bool>> filter)
