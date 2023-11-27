@@ -13,8 +13,8 @@ namespace SekerTeshisApp.Data.Concrete.Configure
     {
         public void Configure(EntityTypeBuilder<DiabetesDetail> builder)
         {
-            builder.HasOne(x => x.Exercises).WithOne(x => x.DiabetesDetail).HasForeignKey<Exercises>(x => x.Id);
-            builder.HasOne(x => x.Food).WithOne(x => x.DiabetesDetail).HasForeignKey<Food>(x => x.Id);
+            builder.HasMany(x => x.Foods).WithOne(x => x.DiabetesDetail);
+            builder.HasMany(x => x.Exercises).WithOne(x => x.DiabetesDetail);
         }
     }
 }

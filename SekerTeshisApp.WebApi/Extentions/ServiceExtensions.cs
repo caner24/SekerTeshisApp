@@ -85,6 +85,8 @@ namespace SekerTeshisApp.WebApi.Extentions
             services.AddScoped<IUserDal, UserDal>();
             services.AddScoped<IDiabetesDal, DiabetesDal>();
             services.AddScoped<IDiabetesDetailDal, DiabetesDetailDal>();
+            services.AddScoped<IFoodDal, FoodDal>();
+            services.AddScoped<IExercisesDal, ExercisesDal>();
         }
 
         public static void ConfigureMailServices(this IServiceCollection services, IConfiguration config)

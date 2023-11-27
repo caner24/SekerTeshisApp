@@ -19,6 +19,8 @@ namespace SekerTeshis.Entity
         }
         public string? FoodImgUrl { get; set; }
         public int Calories { get; set; }
+
+        public int DiabetesDetailId { get; set; }
         public DiabetesDetail? DiabetesDetail { get; set; }
     }
 }

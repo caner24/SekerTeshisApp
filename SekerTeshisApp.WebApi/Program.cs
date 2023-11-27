@@ -3,6 +3,7 @@ using SekerTeshisApp.WebApi.Extentions;
 using System.Reflection;
 using SekerTeshisApp.Application.ActionFilters;
 using Serilog;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,10 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("Web apps starting . . .");
 
-builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute()));
+builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute())).AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureSqlServer(builder.Configuration);
@@ -33,7 +37,10 @@ var app = builder.Build();
 
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Seker Teshis App v1");
+});
 if (app.Environment.IsDevelopment())
 {
 
@@ -54,10 +61,10 @@ app.UseHttpCacheHeaders();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    var configuration = services.GetRequiredService<IConfiguration>();
-//    await SeedIdentity.CreateIdentityUsers(services, configuration);
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var configuration = services.GetRequiredService<IConfiguration>();
+    await SeedIdentity.CreateIdentityUsers(services, configuration);
+}
 app.Run();

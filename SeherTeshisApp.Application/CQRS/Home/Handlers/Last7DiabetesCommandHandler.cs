@@ -21,7 +21,7 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
         }
         async Task<Last7DiabetesResponse> IRequestHandler<Last7DiabetesRequest, Last7DiabetesResponse>.Handle(Last7DiabetesRequest request, CancellationToken cancellationToken)
         {
-            var diabetesDetail = await _diabetesDetailDal.GetAll(x => x.DiabetesId == request.UserId).OrderBy(x => x.MeasureDate).Take(7).ToListAsync();
+            var diabetesDetail = await _diabetesDetailDal.GetAll(x => x.DiabetesId == request.UserId).OrderBy(x => x.MeasureDate).Take(7).AsNoTracking().ToListAsync();
             if (diabetesDetail == null)
             {
                 throw new Exception("Ölçüm değerleri bulunamadi");

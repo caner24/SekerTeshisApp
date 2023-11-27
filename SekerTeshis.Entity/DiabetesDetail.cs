@@ -11,8 +11,8 @@ namespace SekerTeshis.Entity
     {
         public DiabetesDetail()
         {
-            Food = new Food();
-            Exercises = new Exercises();
+            Foods = new List<Food>();
+            Exercises = new List<Exercises>();
         }
         public int Id { get; set; }
         public string Situation { get; set; }
@@ -21,7 +21,7 @@ namespace SekerTeshis.Entity
         public string? DiabetesId { get; set; }
         public int MeasureValue { get; set; }
         public Diabetes? Diabetes { get; set; }
-        public Food Food { get; set; }
-        public Exercises Exercises { get; set; }
+        public List<Food> Foods { get; set; }
+        public List<Exercises> Exercises { get; set; }
     }
 }

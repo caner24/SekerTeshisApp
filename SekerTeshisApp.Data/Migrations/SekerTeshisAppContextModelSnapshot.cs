@@ -51,13 +51,13 @@ namespace SekerTeshisApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eac19c69-a5f8-4847-9ecc-fe92b868f9d4",
+                            Id = "e987b211-0cf0-49ac-a39e-9d15d51f6572",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6a14d3d2-5d8e-4ed8-b5ed-b62a9d593efe",
+                            Id = "a269c443-36ee-4576-a614-1cc029a84bb2",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         });
@@ -225,6 +225,12 @@ namespace SekerTeshisApp.Data.Migrations
             modelBuilder.Entity("SekerTeshis.Entity.Exercises", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DiabetesDetailId")
                         .HasColumnType("int");
 
                     b.Property<string>("ExcersiesImgPath")
@@ -235,15 +241,23 @@ namespace SekerTeshisApp.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DiabetesDetailId");
+
                     b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("SekerTeshis.Entity.Food", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("Calories")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiabetesDetailId")
                         .HasColumnType("int");
 
                     b.Property<string>("FoodImgUrl")
@@ -253,6 +267,8 @@ namespace SekerTeshisApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DiabetesDetailId");
 
                     b.ToTable("Food");
                 });
@@ -402,8 +418,8 @@ namespace SekerTeshisApp.Data.Migrations
             modelBuilder.Entity("SekerTeshis.Entity.Exercises", b =>
                 {
                     b.HasOne("SekerTeshis.Entity.DiabetesDetail", "DiabetesDetail")
-                        .WithOne("Exercises")
-                        .HasForeignKey("SekerTeshis.Entity.Exercises", "Id")
+                        .WithMany("Exercises")
+                        .HasForeignKey("DiabetesDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -413,8 +429,8 @@ namespace SekerTeshisApp.Data.Migrations
             modelBuilder.Entity("SekerTeshis.Entity.Food", b =>
                 {
                     b.HasOne("SekerTeshis.Entity.DiabetesDetail", "DiabetesDetail")
-                        .WithOne("Food")
-                        .HasForeignKey("SekerTeshis.Entity.Food", "Id")
+                        .WithMany("Foods")
+                        .HasForeignKey("DiabetesDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -428,11 +444,9 @@ namespace SekerTeshisApp.Data.Migrations
 
             modelBuilder.Entity("SekerTeshis.Entity.DiabetesDetail", b =>
                 {
-                    b.Navigation("Exercises")
-                        .IsRequired();
+                    b.Navigation("Exercises");
 
-                    b.Navigation("Food")
-                        .IsRequired();
+                    b.Navigation("Foods");
                 });
 
             modelBuilder.Entity("SekerTeshis.Entity.User", b =>

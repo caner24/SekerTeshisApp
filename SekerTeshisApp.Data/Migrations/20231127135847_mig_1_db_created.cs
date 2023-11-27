@@ -206,16 +206,18 @@ namespace SekerTeshisApp.Data.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ExercisesType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExcersiesImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ExcersiesImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiabetesDetailId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exercises_DiabetesDetail_Id",
-                        column: x => x.Id,
+                        name: "FK_Exercises_DiabetesDetail_DiabetesDetailId",
+                        column: x => x.DiabetesDetailId,
                         principalTable: "DiabetesDetail",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -225,17 +227,19 @@ namespace SekerTeshisApp.Data.Migrations
                 name: "Food",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FoodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FoodImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calories = table.Column<int>(type: "int", nullable: false)
+                    Calories = table.Column<int>(type: "int", nullable: false),
+                    DiabetesDetailId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Food", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Food_DiabetesDetail_Id",
-                        column: x => x.Id,
+                        name: "FK_Food_DiabetesDetail_DiabetesDetailId",
+                        column: x => x.DiabetesDetailId,
                         principalTable: "DiabetesDetail",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -246,8 +250,8 @@ namespace SekerTeshisApp.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6a14d3d2-5d8e-4ed8-b5ed-b62a9d593efe", null, "Default", "DEFAULT" },
-                    { "eac19c69-a5f8-4847-9ecc-fe92b868f9d4", null, "Admin", "ADMIN" }
+                    { "a269c443-36ee-4576-a614-1cc029a84bb2", null, "Default", "DEFAULT" },
+                    { "e987b211-0cf0-49ac-a39e-9d15d51f6572", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -293,6 +297,16 @@ namespace SekerTeshisApp.Data.Migrations
                 name: "IX_DiabetesDetail_DiabetesId",
                 table: "DiabetesDetail",
                 column: "DiabetesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exercises_DiabetesDetailId",
+                table: "Exercises",
+                column: "DiabetesDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Food_DiabetesDetailId",
+                table: "Food",
+                column: "DiabetesDetailId");
         }
 
         /// <inheritdoc />

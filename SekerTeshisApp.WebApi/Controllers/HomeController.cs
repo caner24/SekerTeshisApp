@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.RateLimiting;
 using SekerTeshisApp.Application.CQRS.Home.Requests;
 using SekerTeshisApp.Application.CQRS.Home.Responses;
 using SekerTeshisApp.Application.Mail.Abstract;
+using System.Text.Json;
 
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
+    [ApiVersion("1.0")]
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class HomeController : Controller
@@ -21,16 +24,17 @@ namespace SekerTeshisApp.WebApi.Controllers
             _mailSender = mailSender;
         }
         [HttpGet("foodList")]
-        public IActionResult FoodList()
+        public async Task<IActionResult> FoodList([FromQuery] GetUserFoodListRequest userFoodListRequest)
         {
-
-            return Ok();
+            var response = await _mediator.Send(userFoodListRequest);
+            return Ok(response.FoodLists);
         }
 
         [HttpGet("exercisesList")]
-        public IActionResult ExercisesList()
+        public async Task<IActionResult> ExercisesListAsync([FromQuery] GetUserExercisesRequest userExerciseListRequest)
         {
-            return Ok();
+            var response = await _mediator.Send(userExerciseListRequest);
+            return Ok(response.Exercises);
         }
 
         [HttpGet("getLast7Diabetes")]

@@ -13,7 +13,7 @@ namespace SekerTeshisApp.WebApi.Controllers
         [HttpGet("getImageByName")]
         public async Task<IActionResult> GetImageByName([FromQuery] string imgName)
         {
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "FoodImages" + imgName);
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "\\Images\\FoodImages\\" + imgName);
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(imagePath, out var contentType))
             {
