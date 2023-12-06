@@ -1,4 +1,6 @@
-﻿namespace SekerTeshisApp.WebApi.Models
+﻿using System.Net;
+
+namespace SekerTeshisApp.WebApi.Models
 {
     public static class MailBody
     {
@@ -62,6 +64,110 @@
             string formattedHtml = string.Format(html, confirmationType, username, url);
             return formattedHtml;
         }
+
+
+        public static string FoodListMailBody(string morning, string afternoon, string evening)
+        {
+
+            string formattedHtml = $@"
+<!DOCTYPE html>
+<html lang='tr'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Mail Onaylama</title>
+   <style>
+      body {{
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+      }}
+
+      h2 {{
+        color: #333;
+      }}
+
+      ul {{
+        list-style-type: none;
+        padding: 0;
+      }}
+
+      li {{
+        margin-bottom: 10px;
+      }}
+    </style>
+  </head>
+  <body>
+    <h2>Sabah</h2>
+    <ul>
+      <li>{morning}</li>
+    </ul>
+
+    <h2>Öğle</h2>
+    <ul>
+      <li>{afternoon}</li>
+    </ul>
+
+    <h2>Akşam</h2>
+    <ul>
+      <li>{evening}</li>
+    </ul>
+  </body>
+</html>
+";
+
+            return formattedHtml;
+        }
+
+        public static string ExercisesListBody(string afternoon, string evening)
+        {
+
+            string formattedHtml = $@"
+<!DOCTYPE html>
+<html lang='tr'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Mail Onaylama</title>
+   <style>
+      body {{
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+      }}
+
+      h2 {{
+        color: #333;
+      }}
+
+      ul {{
+        list-style-type: none;
+        padding: 0;
+      }}
+
+      li {{
+        margin-bottom: 10px;
+      }}
+    </style>
+  </head>
+  <body>
+    <h2>Öğle</h2>
+    <ul>
+      <li>{afternoon}</li>
+    </ul>
+
+    <h2>Akşam</h2>
+    <ul>
+      <li>{evening}</li>
+    </ul>
+
+  </body>
+</html>
+";
+
+            return formattedHtml;
+        }
+
 
         public static string MailBodyConfirmation(string username, string confirmationType, string dueDate, string url)
         {

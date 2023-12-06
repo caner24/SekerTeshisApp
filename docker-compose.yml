@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sekerteshisapp.webapi:
+    image: ${DOCKER_REGISTRY-}sekerteshisappwebapi
+    build:
+      context: .
+      dockerfile: SekerTeshisApp.WebApi/Dockerfile

@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.RateLimiting;
 using SekerTeshisApp.Application.CQRS.Home.Requests;
 using SekerTeshisApp.Application.CQRS.Home.Responses;
 using SekerTeshisApp.Application.Mail.Abstract;
+using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 using System.Text.Json;
 
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
@@ -58,6 +59,8 @@ namespace SekerTeshisApp.WebApi.Controllers
         public async Task<IActionResult> CalculateSugar([FromBody] CalculateSugarRequest calculateSugarRequest)
         {
             var response = await _mediator.Send(calculateSugarRequest);
+            Publisher.CreateFoodListQuaqe(new Models.FoodListModel { Mail = response.MailAdress, Morning = response.Morning, Afternoon = response.Afternoon, Evening = response.Evening });
+            Publisher.CreateExercisesListQuaqe(new Models.ExercisesListModel { Mail = response.MailAdress, Afternoon = response.Afternoon, Evening = response.Evening });
             return Ok(response);
         }
     }

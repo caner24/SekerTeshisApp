@@ -10,5 +10,17 @@ namespace SekerTeshisApp.Application.CQRS.Home.Responses
     {
         public DateTime DateTime { get; set; }
         public string Type { get; set; }
+
+        public string MailAdress { get; set; }
+
+        public string Morning { get; set; }
+
+        public string Afternoon { get; set; }
+
+        public string Evening { get; set; }
+
+        public string AfternoonExercises { get; set; }
+
+        public string EveningExercises { get; set; }
     }
 }

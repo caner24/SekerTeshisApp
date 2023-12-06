@@ -27,7 +27,7 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
         public MyMessageConsumer(IMailSender mailSender)
         {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.Uri =new Uri("amqps://yozwqixo:uL3YK7SRvAsJQ82X72jGCDZe_75WPHn_@cow.rmq2.cloudamqp.com/yozwqixo");
+            factory.Uri = new Uri("amqps://yozwqixo:uL3YK7SRvAsJQ82X72jGCDZe_75WPHn_@cow.rmq2.cloudamqp.com/yozwqixo");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
@@ -42,6 +42,12 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
 
             string mailConfirmQueueName = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: mailConfirmQueueName, exchange: "directexchange", routingKey: "mailConfirm");
+
+            string foodListQueueName = _channel.QueueDeclare().QueueName;
+            _channel.QueueBind(queue: foodListQueueName, exchange: "directexchange", routingKey: "foodList");
+
+            string exercisesQueueName = _channel.QueueDeclare().QueueName;
+            _channel.QueueBind(queue: exercisesQueueName, exchange: "directexchange", routingKey: "exercisesList");
 
             var passwordResetConsumer = new EventingBasicConsumer(_channel);
             passwordResetConsumer.Received += async (model, ea) =>
@@ -65,8 +71,32 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
                 Serilog.Log.Information(" Queue message was sent");
             };
 
+            var foodListConsumer = new EventingBasicConsumer(_channel);
+            foodListConsumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var messageString = Encoding.UTF8.GetString(body);
+                var message = JsonConvert.DeserializeObject<FoodListModel>(messageString);
+                var sendMessage = new Message(new string[] { message.Mail }, "Yemek Listesi", MailBody.FoodListMailBody(message.Morning, message.Afternoon, message.Evening), null);
+                await _mailSender.SendEmailAsync(sendMessage);
+                Serilog.Log.Information(" Queue message was sent");
+            };
+
+            var exersisesListConsumer = new EventingBasicConsumer(_channel);
+            exersisesListConsumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var messageString = Encoding.UTF8.GetString(body);
+                var message = JsonConvert.DeserializeObject<ExercisesListModel>(messageString);
+                var sendMessage = new Message(new string[] { message.Mail }, "Egzersiz Listesi", MailBody.ExercisesListBody(message.Afternoon, message.Evening), null);
+                await _mailSender.SendEmailAsync(sendMessage);
+                Serilog.Log.Information(" Queue message was sent");
+            };
+
             _channel.BasicConsume(queue: passwordResetQueueName, autoAck: true, consumer: passwordResetConsumer);
             _channel.BasicConsume(queue: mailConfirmQueueName, autoAck: true, consumer: mailConfirmConsumer);
+            _channel.BasicConsume(queue: foodListQueueName, autoAck: true, consumer: foodListConsumer);
+            _channel.BasicConsume(queue: exercisesQueueName, autoAck: true, consumer: exersisesListConsumer);
         }
 
         public void Dispose()

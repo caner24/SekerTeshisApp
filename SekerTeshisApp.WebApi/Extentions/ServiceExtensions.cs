@@ -14,6 +14,7 @@ using System.Text;
 using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 using Microsoft.OpenApi.Models;
 using System.Threading.RateLimiting;
+using SekerTeshis.Entity.Helpers;
 
 
 namespace SekerTeshisApp.WebApi.Extentions
@@ -87,6 +88,9 @@ namespace SekerTeshisApp.WebApi.Extentions
             services.AddScoped<IDiabetesDetailDal, DiabetesDetailDal>();
             services.AddScoped<IFoodDal, FoodDal>();
             services.AddScoped<IExercisesDal, ExercisesDal>();
+
+            services.AddScoped<ISortHelper<DiabetesDetail>, SortHelper<DiabetesDetail>>();
+            services.AddScoped<IDataSharper<DiabetesDetail>, DataShaper<DiabetesDetail>>();
         }
 
         public static void ConfigureMailServices(this IServiceCollection services, IConfiguration config)

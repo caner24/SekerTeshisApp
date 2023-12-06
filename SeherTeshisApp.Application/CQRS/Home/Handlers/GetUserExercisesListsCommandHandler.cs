@@ -29,7 +29,6 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                 throw new UserNotFoundException();
 
             var exercisesList = await _exercisesDal.GetByIdentity(x => x.DiabetesDetailId == diabetesDetail.Id).OrderByDescending(x => x.Id).Take(2).AsNoTracking().ToListAsync();
-            exercisesList.ForEach(x => x.ExcersiesImgPath = Path.Combine(Directory.GetCurrentDirectory(), "Images//ExerciseImages//" + x.ExcersiesImgPath));
             return new GetUserExercisesResponse { Exercises = exercisesList };
         }
     }

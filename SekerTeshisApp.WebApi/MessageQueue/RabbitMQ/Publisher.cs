@@ -57,5 +57,46 @@ namespace SekerTeshisApp.WebApi.MessageQueue.RabbitMQ
 
             }
         }
+        public static void CreateFoodListQuaqe(FoodListModel foodListModel)
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.Uri = new Uri("amqps://yozwqixo:uL3YK7SRvAsJQ82X72jGCDZe_75WPHn_@cow.rmq2.cloudamqp.com/yozwqixo");
+
+            using (IConnection connection = factory.CreateConnection())
+            using (IModel channel = connection.CreateModel())
+            {
+                channel.ExchangeDeclare("directexchange", type: ExchangeType.Direct);
+
+                byte[] bytemessage = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(foodListModel));
+
+                IBasicProperties properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
+
+
+                channel.BasicPublish(exchange: "directexchange", routingKey: "foodList", basicProperties: properties, body: bytemessage);
+
+            }
+        }
+
+        public static void CreateExercisesListQuaqe(ExercisesListModel foodListModel)
+        {
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.Uri = new Uri("amqps://yozwqixo:uL3YK7SRvAsJQ82X72jGCDZe_75WPHn_@cow.rmq2.cloudamqp.com/yozwqixo");
+
+            using (IConnection connection = factory.CreateConnection())
+            using (IModel channel = connection.CreateModel())
+            {
+                channel.ExchangeDeclare("directexchange", type: ExchangeType.Direct);
+
+                byte[] bytemessage = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(foodListModel));
+
+                IBasicProperties properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
+
+
+                channel.BasicPublish(exchange: "directexchange", routingKey: "exercisesList", basicProperties: properties, body: bytemessage);
+
+            }
+        }
     }
 }
