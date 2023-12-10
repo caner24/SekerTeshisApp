@@ -4,6 +4,9 @@ using System.Reflection;
 using SekerTeshisApp.Application.ActionFilters;
 using Serilog;
 using System.Text.Json.Serialization;
+using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +17,17 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("Web apps starting . . .");
 
-builder.Services.AddControllers(config => config.Filters.Add(new ValidationFilterAttribute())).AddJsonOptions(options =>
+
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+    config.Filters.Add(new ValidationFilterAttribute());
+}).AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureSqlServer(builder.Configuration);
@@ -32,6 +42,7 @@ builder.Services.ConfigureRabbitMQ();
 builder.Services.ConfigureResponseCaching();
 builder.Services.ConfigureHttpResponseCache();
 builder.Services.AddMemoryCache();
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureRateLimiting();
 var app = builder.Build();
 
@@ -56,11 +67,14 @@ app.RabbitMQApp();
 app.UseRateLimiter();
 app.UseHttpsRedirection();
 app.ConfigureExceptionHandler();
+
 app.UseResponseCaching();
 app.UseHttpCacheHeaders();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

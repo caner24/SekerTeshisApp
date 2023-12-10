@@ -29,7 +29,7 @@ namespace SekerTeshisApp.Data.Abstract
         Task<string> CreatePasswordTokenAsync(string mail);
 
         Task<IdentityResult> ResetPasswordAsync(string mail, string token, string password);
-
+        Task<bool> IsAdminUser();
         string GetUserId();
 
     }

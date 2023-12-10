@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
@@ -60,7 +60,7 @@ namespace SekerTeshisApp.WebApi.Controllers
         {
             var response = await _mediator.Send(calculateSugarRequest);
             Publisher.CreateFoodListQuaqe(new Models.FoodListModel { Mail = response.MailAdress, Morning = response.Morning, Afternoon = response.Afternoon, Evening = response.Evening });
-            Publisher.CreateExercisesListQuaqe(new Models.ExercisesListModel { Mail = response.MailAdress, Afternoon = response.Afternoon, Evening = response.Evening });
+            Publisher.CreateExercisesListQuaqe(new Models.ExercisesListModel { Mail = response.MailAdress, Afternoon = response.AfternoonExercises, Evening = response.EveningExercises });
             return Ok(response);
         }
     }

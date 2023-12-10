@@ -35,7 +35,10 @@ namespace SekerTeshisApp.Data.Concrete
             _userManager = userManager;
             _configuration = configuration;
         }
-
+        public async Task<bool> IsAdminUser()
+        {
+            return await _userManager.IsInRoleAsync(_user, "Admin");
+        }
         public async Task<TokenDto> CreateToken(bool populateExp)
         {
             var signinCredentials = GetSignInCredentials();

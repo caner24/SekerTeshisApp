@@ -55,7 +55,8 @@ namespace SekerTeshisApp.WebApi.Controllers
                 AccesToken = identityResult.AccessToken,
                 RefreshToken = identityResult.RefreshToken,
                 UserId = identityResult.UserId,
-                Message = "Giris"
+                Message = "Giris",
+                IsAdmin = identityResult.IsAdmin
             };
 
             return Ok(response);

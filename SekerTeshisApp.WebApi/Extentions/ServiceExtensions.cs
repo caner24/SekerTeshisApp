@@ -124,7 +124,7 @@ namespace SekerTeshisApp.WebApi.Extentions
         {
             services.AddHttpCacheHeaders(extOptions =>
             {
-                extOptions.MaxAge = 90;
+                extOptions.MaxAge = 30;
                 extOptions.CacheLocation = Marvin.Cache.Headers.CacheLocation.Public;
             }, validationModelOptionsAction =>
             {
@@ -186,7 +186,6 @@ namespace SekerTeshisApp.WebApi.Extentions
                 });
             });
         }
-
         public static void ConfigureRateLimiting(this IServiceCollection services)
         {
             services.AddRateLimiter(options =>

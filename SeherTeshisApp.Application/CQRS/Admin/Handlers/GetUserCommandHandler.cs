@@ -25,7 +25,7 @@ namespace SekerTeshisApp.Application.CQRS.Admin.Handlers
         }
         public async Task<PagedList<Entity>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
-            var diabetesDetails = _diabetesDetailDal.GetAll(x => DateOnly.FromDateTime(x.MeasureDate) > request.MinCreatedDate && DateOnly.FromDateTime(x.MeasureDate) <= request.MaxCreatedDate);
+            var diabetesDetails = _diabetesDetailDal.GetAll();
             SearchByName(ref diabetesDetails, request.DiabetesName);
             var sortedOwners = _sortHelper.ApplySort(diabetesDetails, request.OrderBy);
             var shapedOwners = _dataShaper.ShapeData(sortedOwners, request.Fields);

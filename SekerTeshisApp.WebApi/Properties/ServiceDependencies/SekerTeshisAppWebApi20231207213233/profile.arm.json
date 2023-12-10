@@ -2,26 +2,26 @@
   "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
-    "_dependencyType": "compute.appService.windows"
+    "_dependencyType": "compute.appService.container"
   },
   "parameters": {
     "resourceGroupName": {
       "type": "string",
-      "defaultValue": "DefaultResourceGroup-DEWC",
+      "defaultValue": "SekerTeshisAppWebApi20231207213233ResourceGroup",
       "metadata": {
         "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
       }
     },
     "resourceGroupLocation": {
       "type": "string",
-      "defaultValue": "germanywestcentral",
+      "defaultValue": "eastus",
       "metadata": {
         "description": "Location of the resource group. Resource groups could have different location than resources, however by default we use API versions from latest hybrid profile which support all locations for resource types we support."
       }
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "SekerTeshisAppWebApi20231104135624",
+      "defaultValue": "SekerTeshisAppWebApi20231207213233",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
@@ -36,7 +36,8 @@
   },
   "variables": {
     "appServicePlan_name": "[concat('Plan', uniqueString(concat(parameters('resourceName'), subscription().subscriptionId)))]",
-    "appServicePlan_ResourceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.Web/serverFarms/', variables('appServicePlan_name'))]"
+    "appServicePlan_ResourceId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('resourceGroupName'), '/providers/Microsoft.Web/serverFarms/', variables('appServicePlan_name'))]",
+    "appServiceContainer_name": "['Container', uniqueString(concat(parameters('resourceName'), subscription().subscriptionId)))]"
   },
   "resources": [
     {
@@ -78,12 +79,7 @@
                 "reserved": false,
                 "serverFarmId": "[variables('appServicePlan_ResourceId')]",
                 "siteConfig": {
-                  "metadata": [
-                    {
-                      "name": "CURRENT_STACK",
-                      "value": "dotnetcore"
-                    }
-                  ]
+                  "linuxFxVersion": "DOCKER|nginx"
                 }
               },
               "identity": {
@@ -94,15 +90,26 @@
               "location": "[parameters('resourceLocation')]",
               "name": "[variables('appServicePlan_name')]",
               "type": "Microsoft.Web/serverFarms",
-              "apiVersion": "2015-08-01",
+              "apiVersion": "2015-02-01",
+              "kind": "linux",
+              "properties": {
+                "name": "[variables('appServicePlan_name')]",
+                "sku": "Standard",
+                "workerSizeId": "0",
+                "reserved": true
+              }
+            },
+            {
+              "location": "[parameters('resourceLocation')]",
+              "name": "[variables('appServiceContainer_name')]",
+              "type": "Microsoft.ContainerRegistry/registries",
+              "apiVersion": "2017-10-01",
               "sku": {
-                "name": "S1",
-                "tier": "Standard",
-                "family": "S",
-                "size": "S1"
+                "name": "Standard"
               },
               "properties": {
-                "name": "[variables('appServicePlan_name')]"
+                "tenantId": "[subscription().tenantId]",
+                "adminUserEnabled": false
               }
             }
           ]

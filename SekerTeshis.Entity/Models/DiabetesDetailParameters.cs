@@ -12,10 +12,6 @@ namespace SekerTeshis.Entity.Models
         {
             OrderBy = "MeasureValue";
         }
-        public DateOnly MinCreatedDate { get; set; }
-        public DateOnly MaxCreatedDate { get; set; }
-
-        public bool ValidateYearRange => MaxCreatedDate > MinCreatedDate;
         public string? DiabetesName { get; set; }
     }
 }

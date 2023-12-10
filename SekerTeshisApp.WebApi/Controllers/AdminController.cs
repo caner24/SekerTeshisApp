@@ -7,7 +7,7 @@ using SekerTeshisApp.Application.CQRS.Admin.Requests;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/admin")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class AdminController : Controller
@@ -21,10 +21,6 @@ namespace SekerTeshisApp.WebApi.Controllers
         [HttpGet("userStatics")]
         public async Task<IActionResult> GetUserStatics([FromQuery] GetUsersRequest getUserRequests)
         {
-            if (!getUserRequests.ValidateYearRange)
-            {
-                return BadRequest("Bu değer aralığında ölçüm bulunamamakta !.");
-            }
 
             var response = await _mediator.Send(getUserRequests);
             var metadata = new
@@ -40,11 +36,11 @@ namespace SekerTeshisApp.WebApi.Controllers
             return Ok(response);
         }
 
-
-        [HttpGet("getUser/{id}")]
-        public IActionResult GetUserById([FromRoute] int id)
+        [HttpGet("getUser")]
+        public async Task<IActionResult> GetUserById([FromQuery] GetUserByIdentityRequest getUserByIdentityRequest)
         {
-            return Ok();
+            var response = await _mediator.Send(getUserByIdentityRequest);
+            return Ok(response);
         }
     }
 }
