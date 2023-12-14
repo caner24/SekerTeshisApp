@@ -7,7 +7,7 @@
   "parameters": {
     "resourceGroupName": {
       "type": "string",
-      "defaultValue": "SekerTeshisAppWebApi20231207213233ResourceGroup",
+      "defaultValue": "SekerTeshisAppWebApi20231213195554ResourceGroup",
       "metadata": {
         "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
       }
@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "SekerTeshisAppWebApi20231207213233",
+      "defaultValue": "SekerTeshisAppWebApi20231213195554",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }

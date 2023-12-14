@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SekerTeshis.Core", "SekerTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SekerTeshisApp.WebApi", "SekerTeshisApp.WebApi\SekerTeshisApp.WebApi.csproj", "{E7AF7085-AC8D-48F7-8209-8074BF7430E7}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{375E535F-EC86-410D-B383-2F532FFC90BE}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B6DB8AAA-207D-41EB-9D21-4E528D42E9B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{E7AF7085-AC8D-48F7-8209-8074BF7430E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AF7085-AC8D-48F7-8209-8074BF7430E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7AF7085-AC8D-48F7-8209-8074BF7430E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{375E535F-EC86-410D-B383-2F532FFC90BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{375E535F-EC86-410D-B383-2F532FFC90BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{375E535F-EC86-410D-B383-2F532FFC90BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{375E535F-EC86-410D-B383-2F532FFC90BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6DB8AAA-207D-41EB-9D21-4E528D42E9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6DB8AAA-207D-41EB-9D21-4E528D42E9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6DB8AAA-207D-41EB-9D21-4E528D42E9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6DB8AAA-207D-41EB-9D21-4E528D42E9B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

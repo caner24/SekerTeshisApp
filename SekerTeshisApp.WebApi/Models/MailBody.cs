@@ -203,7 +203,9 @@ namespace SekerTeshisApp.WebApi.Models
     }}
     
     p {{
+color:'black';
       margin-bottom: 20px;
+font-weight: bolder;
     }}
     
     .btn {{

@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Xml;
+using SekerTeshis.Core.EntityFramework;
 
 namespace SekerTeshis.Entity
 {
-    public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, object>
+    public class Entity : DynamicObject, IXmlSerializable, IDictionary<string, object>,IEntity
     {
         private readonly string _root = "Entity";
         private readonly IDictionary<string, object> _expando = null;

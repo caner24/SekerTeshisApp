@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>375e535f-ec86-410d-b383-2f532ffc90be</ProjectGuid>
+    <ProjectGuid>b6db8aaa-207d-41eb-9d21-4e528d42e9b9</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>sekerteshisapp.webapi</DockerServiceName>

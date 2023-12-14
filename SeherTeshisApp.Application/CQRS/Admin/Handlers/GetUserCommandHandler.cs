@@ -43,7 +43,7 @@ namespace SekerTeshisApp.Application.CQRS.Admin.Handlers
             if (string.IsNullOrEmpty(DiabetesName))
                 return;
 
-            owners = owners.Where(o => o.Situation.ToLowerInvariant().Contains(DiabetesName.Trim().ToLowerInvariant()));
+            owners = owners.Where(o => o.Situation == DiabetesName);
         }
     }
 }
