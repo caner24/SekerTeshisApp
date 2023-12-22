@@ -15,6 +15,11 @@ using SekerTeshisApp.WebApi.MessageQueue.RabbitMQ;
 using Microsoft.OpenApi.Models;
 using System.Threading.RateLimiting;
 using SekerTeshis.Entity.Helpers;
+using SekerTeshis.Entity.IdentityExcepitons;
+using FluentValidation;
+using System;
+using SekerTeshisApp.Application.FluentValidation;
+using SekerTeshis.Entity.DTO;
 
 
 namespace SekerTeshisApp.WebApi.Extentions
@@ -39,13 +44,14 @@ namespace SekerTeshisApp.WebApi.Extentions
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 7;
                 options.Password.RequireDigit = false;
                 options.Password.RequireUppercase = false;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 options.Lockout.MaxFailedAccessAttempts = 3;
-            }).AddDefaultTokenProviders().AddEntityFrameworkStores<SekerTeshisAppContext>();
+            }).AddDefaultTokenProviders().AddErrorDescriber<CustomIdentityErrorDescriber>().AddEntityFrameworkStores<SekerTeshisAppContext>();
 
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
              opt.TokenLifespan = TimeSpan.FromHours(2));
@@ -83,9 +89,13 @@ namespace SekerTeshisApp.WebApi.Extentions
 
         public static void ConfigureServices(this IServiceCollection services)
         {
+
             services.AddScoped<IUserDal, UserDal>();
+
             services.AddScoped<IDiabetesDal, DiabetesDal>();
             services.AddScoped<IDiabetesDetailDal, DiabetesDetailDal>();
+            services.AddScoped<IValidator<DiabetDetailForDto>, DiabetDetailForDtoValidator>();
+
             services.AddScoped<IFoodDal, FoodDal>();
             services.AddScoped<IExercisesDal, ExercisesDal>();
 
@@ -108,7 +118,6 @@ namespace SekerTeshisApp.WebApi.Extentions
         public static void ConfigureRabbitMQ(this IServiceCollection services)
         {
             services.AddSingleton<MyMessageConsumer>();
-
         }
         public static void RabbitMQApp(this WebApplication app)
         {
@@ -196,7 +205,7 @@ namespace SekerTeshisApp.WebApi.Extentions
               factory: partition => new FixedWindowRateLimiterOptions
               {
                   AutoReplenishment = true,
-                  PermitLimit = 5,
+                  PermitLimit = 10,
                   QueueLimit = 2,
                   QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                   Window = TimeSpan.FromSeconds(30)

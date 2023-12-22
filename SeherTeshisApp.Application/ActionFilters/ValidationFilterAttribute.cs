@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace SekerTeshisApp.Application.ActionFilters
 {
-    public class ValidationFilterAttribute : IAsyncActionFilter
+    [AttributeUsage(AttributeTargets.Method)]
+    public class ValidationFilterAttribute : ActionFilterAttribute, IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {

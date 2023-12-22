@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.RateLimiting;
+using SekerTeshisApp.Application.ActionFilters;
 using SekerTeshisApp.Application.CQRS.Home.Requests;
 using SekerTeshisApp.Application.CQRS.Home.Responses;
 using SekerTeshisApp.Application.Mail.Abstract;
@@ -11,7 +13,7 @@ using System.Text.Json;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
@@ -56,6 +58,7 @@ namespace SekerTeshisApp.WebApi.Controllers
         }
 
         [HttpPost("calculateSugar")]
+        [ValidationFilter]
         public async Task<IActionResult> CalculateSugar([FromBody] CalculateSugarRequest calculateSugarRequest)
         {
             var response = await _mediator.Send(calculateSugarRequest);
