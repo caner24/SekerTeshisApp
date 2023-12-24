@@ -35,7 +35,7 @@ namespace SekerTeshisApp.Data.Concrete
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"SERVER=database-1.c8fhrppa5bu2.eu-north-1.rds.amazonaws.com;INITIAL CATALOG=SekerTeshisApp;User Id=admin;Password=Caner-2434;Encrypt=True;TrustServerCertificate=True",
+                optionsBuilder.UseSqlServer(@"Server=tcp:sekerteshisapp.database.windows.net,1433;Initial Catalog=sekerteshisapp;Persist Security Info=False;User ID=dbadmin;Password=45867-Sas;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
                        sqlServerOptionsAction: sqlOptions =>
                        {
 
