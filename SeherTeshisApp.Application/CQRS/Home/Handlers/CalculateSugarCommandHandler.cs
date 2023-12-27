@@ -33,7 +33,7 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
         }
         async Task<CalculateSugarResponse> IRequestHandler<CalculateSugarRequest, CalculateSugarResponse>.Handle(CalculateSugarRequest request, CancellationToken cancellationToken)
         {
-            var userEmail = await _diabetesDal.GetByIdentity(x => x.Id == request.DiabetesId).Include(x => x.User).Select(x => x.User.Email).FirstOrDefaultAsync();
+            var userEmail = await _diabetesDal.GetByIdentity(x => x.Id == request.DiabetesId).Include(x => x.User).Select(x => x.User.Email).AsNoTracking().FirstOrDefaultAsync();
             if (request.MeasureType == "Hungry")
             {
                 var durum = request.MeasureValue switch
@@ -44,14 +44,17 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                     >= 126 => "Diyabet",
                 };
                 var diabetesDetail = _mapper.Map<DiabetesDetail>(request);
+                diabetesDetail.Foods.Clear();
+                diabetesDetail.Exercises.Clear();
                 diabetesDetail.Situation = durum;
                 diabetesDetail.MeasureDate = DateTime.Now;
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListBreakFast[_rnd.Next(6)]);
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListLunch[_rnd.Next(3)]);
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListDinner[_rnd.Next(2)]);
 
-                diabetesDetail.Exercises.Add(GenerateFitnessList.ExercisesList[_rnd.Next(2)]);
-                diabetesDetail.Exercises.Add(GenerateFitnessList.ExercisesList[_rnd.Next(2)]);
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodImgUrl });
+
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
 
                 _morning = diabetesDetail.Foods[0].FoodName;
                 _afternoon = diabetesDetail.Foods[1].FoodName;
@@ -60,7 +63,7 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                 _afternoonExercises = diabetesDetail.Exercises[0].ExercisesType;
                 _eveningExercises = diabetesDetail.Exercises[1].ExercisesType;
 
-                await _diabetesDetailDal.AddAsync(diabetesDetail);
+                var addedEntity = await _diabetesDetailDal.AddAsync(diabetesDetail);
                 return new CalculateSugarResponse { DateTime = DateTime.Now, Type = durum, MailAdress = userEmail, Morning = _morning, Afternoon = _afternoon, Evening = _evening, AfternoonExercises = _afternoonExercises, EveningExercises = _eveningExercises };
 
 
@@ -74,24 +77,26 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                     >= 200 => "Diyabet",
                 };
                 var diabetesDetail = _mapper.Map<DiabetesDetail>(request);
+                diabetesDetail.Foods.Clear();
+                diabetesDetail.Exercises.Clear();
                 diabetesDetail.Situation = durum;
                 diabetesDetail.MeasureDate = DateTime.Now;
 
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListBreakFast[_rnd.Next(6)]);
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListLunch[_rnd.Next(3)]);
-                diabetesDetail.Foods.Add(GenerateFoodList.FoodListDinner[_rnd.Next(2)]);
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodImgUrl });
 
-                diabetesDetail.Exercises.Add(GenerateFitnessList.ExercisesList[_rnd.Next(2)]);
-                diabetesDetail.Exercises.Add(GenerateFitnessList.ExercisesList[_rnd.Next(2)]);
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
 
                 _morning = diabetesDetail.Foods[0].FoodName;
-                _afternoon = diabetesDetail.Foods[0].FoodName;
-                _evening = diabetesDetail.Foods[0].FoodName;
+                _afternoon = diabetesDetail.Foods[1].FoodName;
+                _evening = diabetesDetail.Foods[2].FoodName;
 
                 _afternoonExercises = diabetesDetail.Exercises[0].ExercisesType;
                 _eveningExercises = diabetesDetail.Exercises[1].ExercisesType;
 
-                await _diabetesDetailDal.AddAsync(diabetesDetail);
+                var addedEntity = await _diabetesDetailDal.AddAsync(diabetesDetail);
                 return new CalculateSugarResponse { DateTime = DateTime.Now, Type = durum, MailAdress = userEmail, Morning = _morning, Afternoon = _afternoon, Evening = _evening, AfternoonExercises = _afternoonExercises, EveningExercises = _eveningExercises };
             }
             else
