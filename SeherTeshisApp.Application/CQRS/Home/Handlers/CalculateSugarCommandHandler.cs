@@ -69,7 +69,7 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
             {
                 var durum = request.MeasureValue switch
                 {
-                    < 140 => "Normal",
+                    <= 140 => "Normal",
                     <= 199 => "Gizli Şeker",
                     >= 200 => "Diyabet",
                 };
