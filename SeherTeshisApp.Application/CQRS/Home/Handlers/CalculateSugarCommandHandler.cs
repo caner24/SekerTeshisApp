@@ -49,12 +49,20 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                 diabetesDetail.Situation = durum;
                 diabetesDetail.MeasureDate = DateTime.Now;
 
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodImgUrl });
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodImgUrl });
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodImgUrl });
+                var food = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)];
+                var food2 = GenerateFoodList.FoodListLunch[_rnd.Next(4)];
+                var food3 = GenerateFoodList.FoodListDinner[_rnd.Next(2)];
 
-                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
-                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
+                var exercises = GenerateFitnessList.ExercisesList[_rnd.Next(2)];
+                var exercises2 = GenerateFitnessList.ExercisesList[_rnd.Next(2)];
+
+                diabetesDetail.Foods.Add(new Food { FoodName = food.FoodName, Calories = food.Calories, FoodImgUrl = food.FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = food2.FoodName, Calories = food2.Calories, FoodImgUrl = food2.FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = food3.FoodName, Calories = food3.Calories, FoodImgUrl = food3.FoodImgUrl });
+
+
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType =exercises.ExercisesType, ExcersiesImgPath = exercises.ExcersiesImgPath });
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = exercises2.ExercisesType, ExcersiesImgPath = exercises2.ExcersiesImgPath });
 
                 _morning = diabetesDetail.Foods[0].FoodName;
                 _afternoon = diabetesDetail.Foods[1].FoodName;
@@ -82,12 +90,20 @@ namespace SekerTeshisApp.Application.CQRS.Home.Handlers
                 diabetesDetail.Situation = durum;
                 diabetesDetail.MeasureDate = DateTime.Now;
 
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)].FoodImgUrl });
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(3)].FoodImgUrl });
-                diabetesDetail.Foods.Add(new Food { FoodName = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodName, Calories = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].Calories, FoodImgUrl = GenerateFoodList.FoodListBreakFast[_rnd.Next(2)].FoodImgUrl });
+                var food = GenerateFoodList.FoodListBreakFast[_rnd.Next(6)];
+                var food2 = GenerateFoodList.FoodListLunch[_rnd.Next(4)];
+                var food3 = GenerateFoodList.FoodListDinner[_rnd.Next(2)];
 
-                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
-                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExercisesType, ExcersiesImgPath = GenerateFitnessList.ExercisesList[_rnd.Next(2)].ExcersiesImgPath });
+                var exercises = GenerateFitnessList.ExercisesList[_rnd.Next(2)];
+                var exercises2 = GenerateFitnessList.ExercisesList[_rnd.Next(2)];
+
+                diabetesDetail.Foods.Add(new Food { FoodName = food.FoodName, Calories = food.Calories, FoodImgUrl = food.FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = food2.FoodName, Calories = food2.Calories, FoodImgUrl = food2.FoodImgUrl });
+                diabetesDetail.Foods.Add(new Food { FoodName = food3.FoodName, Calories = food3.Calories, FoodImgUrl = food3.FoodImgUrl });
+
+
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = exercises.ExercisesType, ExcersiesImgPath = exercises.ExcersiesImgPath });
+                diabetesDetail.Exercises.Add(new Exercises { ExercisesType = exercises2.ExercisesType, ExcersiesImgPath = exercises2.ExcersiesImgPath });
 
                 _morning = diabetesDetail.Foods[0].FoodName;
                 _afternoon = diabetesDetail.Foods[1].FoodName;

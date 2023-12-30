@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace SekerTeshisApp.WebApi.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/home")]
     [ApiExplorerSettings(GroupName = "v1")]
@@ -51,10 +51,7 @@ namespace SekerTeshisApp.WebApi.Controllers
         public async Task<IActionResult> CalculateSugar([FromQuery] IsUserLockDownRequest isUserLockDownRequest)
         {
             var response = await _mediator.Send(isUserLockDownRequest);
-            if (response.IsLockDown)
-                return Ok(response);
-            else
-                return BadRequest(response);
+            return Ok(response);
         }
 
         [HttpPost("calculateSugar")]
